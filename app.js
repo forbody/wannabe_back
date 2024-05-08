@@ -23,14 +23,14 @@ const passport = require('passport'); // 패스포트 모듈
 // passportConfig();
 
 // const apiRouter = require('./routes'); // 라우터 경로 설정 (자체)
-// const { sequelize } = require('./models'); // 시퀄라이즈 모델 설정
-// sequelize.sync({ force: false }) // 서버 실행 시 MySQL과 연동
-    // .then(() => {
-    //     console.log('데이터베이스 연결 성공');
-    // })
-    // .catch((err) => {
-    //     console.error(err);
-    // });
+const { sequelize } = require('./models'); // 시퀄라이즈 모델 설정
+sequelize.sync({ force: false }) // 서버 실행 시 MySQL과 연동
+    .then(() => {
+        console.log('데이터베이스 연결 성공');
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 const app = express();
 app.set('port', process.env.PORT || 8000);
