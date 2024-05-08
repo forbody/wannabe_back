@@ -31,7 +31,7 @@ class Todo_list extends Sequelize.Model {
         db.Todo_list.hasMany(db.Share_comment);
         db.Todo_list.belongsToMany(db.User,{ through: 'List_user' })
         db.Todo_list.belongsToMany(db.Todo_element,{ through: 'List_elem' })
-        db.Todo_list.belongsToMnay(db.Todo_recur,  {through: 'List_recur'})
+        db.Todo_list.belongsToMany(db.Todo_recur,  {through: 'List_recur'})
     }
 };
 

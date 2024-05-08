@@ -17,7 +17,7 @@ class Todo_recur extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Todo_recur.belongsToMnay(db.Todo_list,  {through: 'List_recur'})
+        db.Todo_recur.belongsToMany(db.Todo_list,  {through: 'List_recur'})
     }
 };
 
