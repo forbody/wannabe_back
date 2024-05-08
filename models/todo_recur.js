@@ -11,6 +11,7 @@ class Todo_recur extends Sequelize.Model {
         }, {
             sequelize,
             paranoid: true,
+            underscored: true,
             charset: "utf8",
             collate: "utf8_general_ci",
         });
