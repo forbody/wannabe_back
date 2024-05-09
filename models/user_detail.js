@@ -35,9 +35,6 @@ class User_detail extends Sequelize.Model {
             collate: "utf8_general_ci",
         });
     }
-    static associate(db) {
-        db.User_detail.hasOne(db.User);
-    }
 };
 
 module.exports = User_detail;

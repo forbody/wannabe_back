@@ -35,7 +35,7 @@ class Exercise extends Sequelize.Model {
     }
     static associate(db) {
         db.Exercise.belongsToMany(db.User, {  through: 'Exercise_follow' });
-        db.Exercise.belongsToMany(db.Todo_element, {  through: 'Ele-exercise' });
+        db.Exercise.belongsToMany(db.Todo_element, {  through: 'Ele_exercise' });
     }
 };
 
