@@ -4,7 +4,7 @@ class User_detail extends Sequelize.Model {
     static initiate(sequelize) {
         User_detail.init({
             gender: {
-                type: Sequelize.ENUM("남", "여"),
+                type: Sequelize.ENUM("M", "F"),
                 allowNull: true,
             },
             birthday: {
@@ -30,6 +30,7 @@ class User_detail extends Sequelize.Model {
         }, {
             sequelize,
             paranoid: true,
+            underscored: true, // false
             charset: "utf8",
             collate: "utf8_general_ci",
         });

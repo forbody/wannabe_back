@@ -47,13 +47,13 @@ class User extends Sequelize.Model {
     }
     static associate(db) {
         db.User.hasOne(db.User_detail);
-        // db.User.hasMany(db.Todo_element);
-        // db.User.belongsToMany(db.Todo_list, { foreignKey: 'user_id', through: 'List_user' });
-        // db.User.belongsToMany(db.Share_like, { foreignKey: 'user_id', through: 'Share_like' });
-        // db.User.belongsToMany(db.Exercise, { foreignKey: 'user_id', through: 'Exercise_follow' });
-        // db.User.belongsToMany(db.Food, { foreignKey: 'user_id', through: 'Food_follow' });
-        db.User.belongsToMany(db.User, { foreignKey: 'user_id', as: 'celebrities', through: 'User_like' });
-        db.User.belongsToMany(db.User, { foreignKey: 'celebrity_id', as: 'users', through: 'User_like' });
+        db.User.hasMany(db.Todo_element);
+        db.User.belongsToMany(db.Todo_list, { foreignKey: 'user_id', through: 'List_user' });
+        db.User.belongsToMany(db.Share_comment, { foreignKey: 'user_id', through: 'Share_like' });
+        db.User.belongsToMany(db.Exercise, { foreignKey: 'user_id', through: 'Exercise_follow' });
+        db.User.belongsToMany(db.Food, { foreignKey: 'user_id', through: 'Food_follow' });
+        db.User.belongsToMany(db.User, { foreignKey: 'user_id', as: 'Celebrities', through: 'User_like' });
+        db.User.belongsToMany(db.User, { foreignKey: 'celebrity_id', as: 'Users', through: 'User_like' });
     }
 };
 
