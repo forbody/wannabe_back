@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-class health_tip extends Sequelize.Model {
+class Health_tip extends Sequelize.Model {
     static initiate(sequelize) {
-        health_tip.init({
+        Health_tip.init({
             health_tip : {
                 type : Sequelize.STRING(255),
                 allowNull: true
@@ -20,4 +20,4 @@ class health_tip extends Sequelize.Model {
     }
 };
 
-module.exports = health_tip;
+module.exports = Health_tip;
