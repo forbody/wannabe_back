@@ -11,6 +11,14 @@ class Todo_element extends Sequelize.Model {
                 type : Sequelize.BOOLEAN,
                 defaultValue : false
             },
+            date : {
+                type : Sequelize.DATE,
+                allowNull: false,
+            },
+            recur : {
+                type : Sequelize.BOOLEAN,
+                defaultValue : false
+            },
             order : {
                 type : Sequelize.INTEGER,
                 defaultValue : false
@@ -28,6 +36,7 @@ class Todo_element extends Sequelize.Model {
         db.Todo_element.belongsToMany(db.Todo_list,{ through: 'List_elem' })
         db.Todo_element.belongsToMany(db.Exercise,{ through: 'Ele_exercise' })
         db.Todo_element.belongsToMany(db.Food,{ through: 'Ele_food' })
+        db.Todo_element.belongsToMany(db.Todo_recur,  {through: 'List_recur'})
     }
 };
 
