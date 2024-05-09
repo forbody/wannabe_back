@@ -27,6 +27,7 @@ class Food extends Sequelize.Model {
     static associate(db) {
         db.Food.belongsToMany(db.User,  {through: 'Food_follow'} );
         db.Food.belongsToMany(db.Todo_element, { through: 'Ele_food' });
+        db.Food.belongsTo(db.Category);
     }
 };
 
