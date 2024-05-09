@@ -16,6 +16,7 @@ class User extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
+            
             provider: {
                 type: Sequelize.ENUM("local", "kakao"),
                 allowNull: false,
@@ -24,6 +25,14 @@ class User extends Sequelize.Model {
             kakao_id: {
                 type: Sequelize.STRING(50),
                 allowNull: true,
+            },
+            gender: {
+                type: Sequelize.ENUM("M", "F"),
+                allowNull: false,
+            },
+            birthday: {
+                type: Sequelize.DATE,
+                allowNull: false,
             },
             grade: {
                 type: Sequelize.STRING(50),
@@ -44,7 +53,7 @@ class User extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.User.hasOne(db.User_detail);
+        db.User.hasMany(db.User_detail);
         db.User.hasMany(db.Todo_element);
         db.User.belongsToMany(db.Todo_list, { through: 'List_user' });
         db.User.belongsToMany(db.Share_comment, { foreignKey: 'user_id', through: 'Share_like' });
