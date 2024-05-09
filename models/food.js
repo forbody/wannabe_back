@@ -17,8 +17,11 @@ class Food extends Sequelize.Model {
             }
         }, {
             sequelize,
-            charset: 'utf8mb4',
-            collate: 'utf8mb4_general_ci',
+            paranoid: true, // deletedAt (false)
+            timestamps: true, // created, updated (true)
+            underscored: true, // false
+            charset: "utf8",
+            collate: "utf8_general_ci"
         });
     }
     static associate(db) {

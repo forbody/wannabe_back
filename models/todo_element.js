@@ -26,8 +26,8 @@ class Todo_element extends Sequelize.Model {
     static associate(db) {
         db.Todo_element.belongsTo(db.User);
         db.Todo_element.belongsToMany(db.Todo_list,{ through: 'List_elem' })
-        db.Todo_element.belongsToMany(db.Exercise,{ through: 'Ele-exercise' })
-        db.Todo_element.belongsToMany(db.Food,{ through: 'Ele-food' })
+        db.Todo_element.belongsToMany(db.Exercise,{ through: 'Ele_exercise' })
+        db.Todo_element.belongsToMany(db.Food,{ through: 'Ele_food' })
     }
 };
 
