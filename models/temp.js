@@ -1,8 +1,8 @@
 const Sequelize = require('sequelize');
 
-class Food extends Sequelize.Model {
+class Temp extends Sequelize.Model {
     static initiate(sequelize) {
-        Food.init({
+        Temp.init({
             category: {
                 type: Sequelize.STRING(50),
                 allowNull: false,
@@ -44,4 +44,4 @@ class Food extends Sequelize.Model {
     }
 };
 
-module.exports = Food;
+module.exports = Temp;
