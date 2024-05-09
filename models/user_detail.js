@@ -26,6 +26,10 @@ class User_detail extends Sequelize.Model {
             bodyshape: {
                 type: Sequelize.STRING(50),
                 allowNull: true,
+            },
+            rec_cal : {
+                type: Sequelize.INTEGER,
+                allowNull: true,
             }
         }, {
             sequelize,
