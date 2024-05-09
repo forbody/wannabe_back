@@ -22,6 +22,10 @@ class User_detail extends Sequelize.Model {
             rec_cal : {
                 type: Sequelize.INTEGER,
                 allowNull: false,
+            },
+            img : {
+                type: Sequelize.STRING(255),
+                allowNull: true,
             }
         }, {
             sequelize,
