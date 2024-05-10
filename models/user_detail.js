@@ -12,7 +12,7 @@ class User_detail extends Sequelize.Model {
                 allowNull: false,
             },
             bmi: {
-                type: Sequelize.INTEGER,
+                type: Sequelize.FLOAT,
                 allowNull: false,
             },
             bodyshape: {

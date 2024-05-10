@@ -16,7 +16,6 @@ class User extends Sequelize.Model {
                 type: Sequelize.STRING(100),
                 allowNull: true,
             },
-            
             provider: {
                 type: Sequelize.ENUM("local", "kakao"),
                 allowNull: false,
@@ -39,6 +38,10 @@ class User extends Sequelize.Model {
                 allowNull: false,
                 defaultValue: "normal",
             },
+            role_model_id : {
+                type: Sequelize.INTEGER,
+                allowNull: true,
+            },
             refresh_token: {
                 type: Sequelize.STRING(255),
                 allowNull: true,
@@ -53,14 +56,14 @@ class User extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.User.hasMany(db.User_detail);
+        db.User.hasMany(db.User_detail, { as: 'UserDetail' });
         db.User.hasMany(db.Todo_element);
         db.User.belongsToMany(db.Todo_list, { through: 'List_user' });
         db.User.belongsToMany(db.Share_comment, { foreignKey: 'user_id', through: 'Share_like' });
         db.User.belongsToMany(db.Exercise, { foreignKey: 'user_id', through: 'Exercise_follow' });
         db.User.belongsToMany(db.Food, { foreignKey: 'user_id', through: 'Food_follow' });
-        db.User.belongsToMany(db.User, { foreignKey: 'user_id', as: 'Celebrities', through: 'User_like' });
-        db.User.belongsToMany(db.User, { foreignKey: 'celebrity_id', as: 'Users', through: 'User_like' });
+        db.User.belongsToMany(db.User, { foreignKey: 'userliking_id', as: 'Likiers', through: 'User_like' });
+        db.User.belongsToMany(db.User, { foreignKey: 'userliker_id', as: 'Likings', through: 'User_like' });
     }
 };
 
