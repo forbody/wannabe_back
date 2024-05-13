@@ -9,25 +9,25 @@ router.get('/', verifyToken, getUsers)
 // GET /v1/users/:id - 특정 유저 정보 조회 [완료]
 router.get('/:id', verifyToken, getUser)
 
-// DELETE /v1/users/ - 유저 삭제
-router.delete('/', verifyToken, deleteUser)
-
-// PATCH /v1/users/ - 유저 세부 정보 수정
+// PATCH /v1/users/ - 유저 정보 수정 [완료]
 router.patch('/', verifyToken, modifyUser)
+
+// DELETE /v1/users/ - 유저 삭제 [완료]
+router.delete('/', verifyToken, deleteUser)
 
 // POST /v1/users/ - 유저 세부 정보 추가 [완료]
 router.post('/', verifyToken, addUserDetail)
 
-// POST /v1/users/like - 유저 좋아요
+// POST /v1/users/like - 유저 좋아요 [완료]
 router.post('/like', verifyToken, like)
 
-// DELETE /v1/users/like - 유저 좋아요 취소
+// DELETE /v1/users/like - 유저 좋아요 취소 [완료]
 router.delete('/like', verifyToken, unlike)
 
-// GET /v1/users/like/:id - 나를 좋아요 한 유저 조회
-router.get('/likiers/:id', verifyToken, getLikers)
+// GET /v1/users/like/:id - 나를 좋아요 한 유저 조회 [완료]
+router.get('/likers/:id', verifyToken, getLikers)
 
-// GET /v1/users/like/:id - 내가 좋아요 한 유저 조회
+// GET /v1/users/like/:id - 내가 좋아요 한 유저 조회 [완료]
 router.get('/likings/:id', verifyToken, getLikings)
 
 module.exports = router;
