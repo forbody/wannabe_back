@@ -1,12 +1,8 @@
-// const express = require('express');
+const express = require('express');
+const { uploadFood } = require('../controllers/food');
+const router = express.Router();
+const { Category, Food } = require('../models');
 
+router.get('/', uploadFood)
 
-
-// // /v1/food/ [GET - 전체 식단페이지 조회]
-
-// router.get('/', getFood);
-
-
-
-
-// module.exports = router;
+module.exports = router;
