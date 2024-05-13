@@ -8,6 +8,7 @@ let corsOptions = {
     origin: process.env.CLIENT_URL,
     credentials: true
 }
+const router = require('./routes');
 
 const fs = require('fs');
 // 업로드 폴더 생성
@@ -24,7 +25,7 @@ const passport = require('passport'); // 패스포트 모듈
 
 // const apiRouter = require('./routes'); // 라우터 경로 설정 (자체)
 const { sequelize } = require('./models'); // 시퀄라이즈 모델 설정
-sequelize.sync({ force: true }) // 서버 실행 시 MySQL과 연동
+sequelize.sync({ force: false }) // 서버 실행 시 MySQL과 연동
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
@@ -54,7 +55,7 @@ app.use(
     // passport.session(),
 )
 
-// app.use('/v1', apiRouter);
+app.use('/v1', router);
 
 app.use((req, res, next) => {
     const err = new Error(`없는 경로 [${req.method} ${req.url}]`);
