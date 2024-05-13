@@ -3,6 +3,9 @@ const router = express.Router();
 const userRouter = require('./user');
 const { createToken, join, refreshToken, kakaoLogin } = require('../controllers/auth');
 const passport = require('passport');
+const todoEleRouter = require('./todo_element')
+const todoListRouter = require('./todo_list')
+const foodRouter = require('./food')
 
 // POST /v1/auth/join - 회원가입
 router.post('/auth/join', join);
@@ -19,6 +22,15 @@ router.post('/auth/refresh', refreshToken);
 
 // USE /v1/users
 router.use('/users', userRouter); // v1뒤에 users를 붙여서 보낸다.
+
+// /v1/todo_element
+router.use('/todo_element', todoEleRouter)
+
+// /v1/todo_list
+router.use('/todo_list', todoListRouter)
+
+// /v1/food
+router.use('/food', foodRouter)
 
 
 module.exports = router;
