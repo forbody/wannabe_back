@@ -34,10 +34,12 @@ exports.getUser = async (req, res, next) => {
 
 exports.modifyUser = async (req, res, next) => {
     try {
+        const user = await User.findByPk(req.user.id)
         const ud = await User_detail.findOne({
-            where: req.user.id,
+            where: { UserId: req.user.id },
             order: [['createdAt', 'DESC']]
         })
+        await user.update({ user_name: req.body.user_name });
         await User_detail.update({
             height: req.body.height,
             weight:req.body.weight,
@@ -58,8 +60,8 @@ exports.modifyUser = async (req, res, next) => {
 
 exports.deleteUser = async (req, res, next) => {
     try {
-        await User.destroy({
-            where: { id : req.user.id},
+        await User.destroy({  
+            where: { id: req.user.id },
             include: [{ model: User_detail, as: 'UserDetail' }]
         });
         res.json({
@@ -97,12 +99,9 @@ exports.addUserDetail = async (req, res, next) => {
 
 exports.like = async (req, res, next) => {
     try{
-        const user = await User.findOne({
-            where : { id : req.body.id }, // 상대 아이디: req.body.id
-            include: [{ model: User_detail, as: 'UserDetail' }]
-        })
-        if (user) {
-            await user.addLikers(req.user.id) // 내 아이디: req.user.id
+        const likedUser = await User.findByPk(req.body.id);
+        if (likedUser) {
+            await likedUser.addLikers(req.user.id) // 내 아이디: req.user.id
             res.json({
                 code: 200,
                 message: "좋아요 되었습니다."
@@ -121,12 +120,9 @@ exports.like = async (req, res, next) => {
 
 exports.unlike = async (req, res, next) => {
     try{
-        const user = await User.findOne({
-            where : { id : req.body.id }, // 상대 아이디: req.body.id
-            include: [{ model: User_detail, as: 'UserDetail' }]
-        })
-        if (user) {
-            await user.removeLikers(req.user.id) // 내 아이디: req.user.id
+        const unlikedUser = await User.findByPk(req.body.id);
+        if (unlikedUser) {
+            await unlikedUser.removeLikers(req.user.id) // 내 아이디: req.user.id
             res.json({
                 code: 200,
                 message: "좋아요 취소 되었습니다."
@@ -147,14 +143,17 @@ exports.getLikers = async (req, res, next) => {
     try{
         const user = await User.findOne({
             where : { id : req.params.id }, // 조회할 대상자의 아이디: req.params.id
-            include: [{ model: User_detail, as: 'UserDetail' }]
+            include: [
+                { model: User, as: 'Likers' },
+                { model: User, as: 'Likings' },
+            ]
         });
         if (user) {
-            const likers = await user.getLikers({
+            const likings = await user.getLikings({
             })
             res.json({
                 code: 200,
-                payload: likers
+                payload: likings
             })
         } else {
             res.json({
@@ -172,14 +171,17 @@ exports.getLikings = async (req, res, next) => {
     try{
         const user = await User.findOne({
             where : { id : req.params.id }, // 조회할 대상자의 아이디: req.params.id
-            include: [{ model: User_detail, as: 'UserDetail' }]
+            include: [
+                { model: User, as: 'Likers' },
+                { model: User, as: 'Likings' },
+            ]
         });
         if (user) {
-            const likings = await user.getLikings({
+            const likers = await user.getLikers({
             })
             res.json({
                 code: 200,
-                payload: likings
+                payload: likers
             })
         } else {
             res.json({
