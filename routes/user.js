@@ -1,7 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, getUser, modifyUser, deleteUser, addUserDetail, getLikings, getLikers, like, unlike } = require('../controllers/user')
+const { getUsers, getUser, modifyUser, deleteUser, addUserDetail, uploadUserImg, getLikings, getLikers, like, unlike } = require('../controllers/user')
 const { verifyToken } = require("../middlewares")
+const multer = require('multer');
+const path = require('path')
+
+const storage = multer.diskStorage({
+    destination(req, file, cb) {
+        cb(null, "public/uploads")
+    },
+    filename(req, file, cb) {
+        const ext = path.extname(file.originalname);
+        cb(null, path.basename(file.originalname, ext) + Date.now() + ext);
+    }
+});
+const limits = { fileSize: 10 * 1024 * 1024 };
+const imgUpload = multer({
+    storage,
+    limits
+});
 
 // GET /v1/users/ - 모든 유저 정보 조회 [완료]
 router.get('/', verifyToken, getUsers)
@@ -17,6 +34,9 @@ router.delete('/', verifyToken, deleteUser)
 
 // POST /v1/users/ - 유저 세부 정보 추가 [완료]
 router.post('/', verifyToken, addUserDetail)
+
+// POST /v1/posts/image - 유저 세부 정보 이미지 업로드
+router.post('/image', imgUpload.single('img'), uploadUserImg)
 
 // POST /v1/users/like - 유저 좋아요 [완료]
 router.post('/like', verifyToken, like)

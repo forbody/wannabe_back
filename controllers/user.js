@@ -1,5 +1,12 @@
 const { User, User_detail } = require('../models');
 
+exports.uploadUserImg = (req, res) => {
+    res.json({
+        code: 200,
+        img: `/uploads/${req.file.filename}`
+    })
+}
+
 exports.getUsers = async (req, res, next) => {
     try{
         const users =  await User.findAll({  
