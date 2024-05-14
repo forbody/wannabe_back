@@ -6,6 +6,7 @@ const passport = require('passport');
 const todoEleRouter = require('./todo_element')
 const todoListRouter = require('./todo_list')
 const foodRouter = require('./food')
+const todoShareRouter = require('./share')
 
 // POST /v1/auth/join - 회원가입
 router.post('/auth/join', join);
@@ -28,6 +29,9 @@ router.use('/todo_element', todoEleRouter)
 
 // /v1/todo_list
 router.use('/todo_list', todoListRouter)
+
+// /v1/todo_list/share
+router.use('/todo_list/share', todoShareRouter)
 
 // /v1/food
 router.use('/food', foodRouter)

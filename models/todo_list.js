@@ -5,12 +5,16 @@ class Todo_list extends Sequelize.Model {
         Todo_list.init({
             title: {
                 type: Sequelize.STRING(50),
-                allowNull: false,
+                allowNull: true,
             },
             share : {
                 type : Sequelize.BOOLEAN,
                 defaultValue : false
-            }
+            },
+            date : {
+                type : Sequelize.DATEONLY,
+                allowNull: false,
+            },
         }, {
             sequelize,
             paranoid: true,
