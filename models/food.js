@@ -7,6 +7,10 @@ class Food extends Sequelize.Model {
                 type: Sequelize.STRING(50),
                 allowNull: false,
             },
+            sort : {
+                type: Sequelize.STRING(50),
+                allowNull: false,
+            },
             img: {
                 type: Sequelize.STRING(255),
                 allowNull: true,

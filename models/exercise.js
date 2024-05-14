@@ -11,7 +11,6 @@ class Exercise extends Sequelize.Model {
             sort : {
                 type: Sequelize.STRING(50),
                 allowNull: false,
-                unique: true,
             },
             description : {
                 type: Sequelize.STRING(50),

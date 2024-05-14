@@ -62,7 +62,7 @@ class User extends Sequelize.Model {
         db.User.belongsToMany(db.Share_comment, { foreignKey: 'user_id', through: 'Share_like' });
         db.User.belongsToMany(db.Exercise, { foreignKey: 'user_id', through: 'Exercise_follow' });
         db.User.belongsToMany(db.Food, { foreignKey: 'user_id', through: 'Food_follow' });
-        db.User.belongsToMany(db.User, { foreignKey: 'userliking_id', as: 'Likiers', through: 'User_like' });
+        db.User.belongsToMany(db.User, { foreignKey: 'userliking_id', as: 'Likers', through: 'User_like' });
         db.User.belongsToMany(db.User, { foreignKey: 'userliker_id', as: 'Likings', through: 'User_like' });
     }
 };

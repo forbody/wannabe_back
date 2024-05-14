@@ -3,8 +3,12 @@ const Sequelize = require('sequelize');
 class Todo_element extends Sequelize.Model {
     static initiate(sequelize) {
         Todo_element.init({
-            element_name: {
-                type: Sequelize.STRING(50),
+            category_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
+            todo_id: {
+                type: Sequelize.INTEGER,
                 allowNull: false,
             },
             achieve : {
@@ -12,7 +16,7 @@ class Todo_element extends Sequelize.Model {
                 defaultValue : false
             },
             date : {
-                type : Sequelize.DATE,
+                type : Sequelize.DATEONLY,
                 allowNull: false,
             },
             recur : {

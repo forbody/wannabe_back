@@ -24,7 +24,7 @@ exports.createToken = async (req, res, next) => {
                     process.env.JWT_SECRET,
                     { expiresIn : '7d', issuer: "wannabe", subject: "refreshToken"}
                 );
-                User.update({ refreshToken }, { where : { id: user.id }})
+                User.update({ refresh_token: refreshToken }, { where : { id: user.id }})
                 if (err) {
                     console.error(err);
                     return next(err);
@@ -125,8 +125,7 @@ exports.kakaoLogin = async(req, res, next) => {
                     process.env.JWT_SECRET,
                     { expiresIn : '7d', issuer: "wannabe", subject: "refreshToken"}
                 );
-
-                User.update({ refreshToken }, { where : { id: user.id }})
+                User.update({ refresh_token: refreshToken }, { where : { id: user.id }})
                 if (err) {
                     console.error(err);
                     return next(err);
