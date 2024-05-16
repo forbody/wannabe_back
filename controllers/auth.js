@@ -59,7 +59,7 @@ exports.join = async(req, res, next) => {
             gender,
             birthday,
             grade,
-            role_model_id
+            role_model_id: bodyshape
         });
         user.createUserDetail({
             height,
