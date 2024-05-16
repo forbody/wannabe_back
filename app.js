@@ -59,7 +59,7 @@ app.use(
 )
 
 app.use('/v1', router);
-app.use('/v1', apiRouter);
+// app.use('/v1', apiRouter);
 
 app.use((req, res, next) => {
     const err = new Error(`없는 경로 [${req.method} ${req.url}]`);

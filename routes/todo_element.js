@@ -4,7 +4,7 @@ const router = express.Router();
 
 
 //[POST] v1/todo_element/
-router.post('/', regist_todo_ele)
+// router.post('/', regist_todo_ele)
 
 //[GET] v1/todo_element/
 // router.get('/', get_todo_ele)

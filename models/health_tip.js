@@ -4,7 +4,7 @@ class Health_tip extends Sequelize.Model {
     static initiate(sequelize) {
         Health_tip.init({
             health_tip : {
-                type : Sequelize.STRING(255),
+                type : Sequelize.TEXT,
                 allowNull: true
             }
         }, {
