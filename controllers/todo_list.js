@@ -73,14 +73,14 @@ exports.modify_todo_list = async (req, res, next) => {
             //     attribute  : ['share']
             // })
             // const share = temp.dataValues.share
-            await Todo_list.update({
+            await Todo_element.update({
                 share : Sequelize.literal('Not share') // sequelize update toggle
             },{
                 where : {id :req.params.id}
             })
             res.json({
                 code : 200,
-                message : 'todo_list 수정완료'
+                message : 'todo_achieve 수정완료'
             })
     } catch (err) {
         console.error(err);

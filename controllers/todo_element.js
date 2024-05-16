@@ -1,4 +1,4 @@
-const { BOOLEAN } = require('sequelize');
+const { Sequelize } = require('sequelize');
 const { Todo_element, Categroy, Food , Exercise, Todo_list, User} = require('../models');
 
 let year = new Date().getFullYear(); // 년도
@@ -146,6 +146,24 @@ exports.create_ele_recur = async (req, res, next ) => {
             res.json({
                 code : 200,
                 message : '일과 반복이 추가되었습니다.'
+            })
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+}
+
+
+exports.update_ele_achieve = async (req, res, next ) =>  {
+    try {
+        await Todo_element.update({
+                achieve : Sequelize.literal('Not achieve') // sequelize update toggle
+            },{
+                where : {id :req.params.id}
+            })
+            res.json({
+                code : 200,
+                message : 'todo_list 수정완료'
             })
     } catch (err) {
         console.error(err);
