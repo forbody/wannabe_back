@@ -1,3 +1,4 @@
+const { User } = require('../models');
 const { Food, Category } = require('../models');
 
 exports.uploadFood = async  (req, res, next) => {
@@ -33,3 +34,25 @@ exports.uploadFood = async  (req, res, next) => {
         next(err)
     }
 }
+
+// 물 마신 횟수를 유저 정보에서 따오기
+exports.watercount = async (req, res, next) => {
+    console.log('물 마신 횟수 체크');
+    try {
+        const Count = await User.findOne({
+            where : { id : req.params.id }
+        })
+        res.json(Count);
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+}
+
+// 하루 권장 칼로리 섭취량 제공
+
+// 오늘 섭취한 칼로리 입력
+
+// 식단 생성 테이블 제공
+
+// 음식 정보 검색 테이블 

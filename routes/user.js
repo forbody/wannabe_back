@@ -21,7 +21,7 @@ const imgUpload = multer({
 });
 
 // GET /v1/users/ - 모든 유저 정보 조회 [완료]
-router.get('/', verifyToken, getUsers)
+// router.get('/', verifyToken, getUsers)
 
 // GET /v1/users/:id - 특정 유저 정보 조회 [완료]
 router.get('/:id', verifyToken, getUser)
