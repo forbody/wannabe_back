@@ -2,16 +2,16 @@ const { Sequelize } = require('sequelize');
 const { Todo_list ,User, Todo_element, share_comment } = require('../models');
 
 
-let year = new Date().getFullYear(); // 년도
-let month = new Date().getMonth();  // 월
-let date = new Date().getDate();  // 날짜
-let today = `${year}-${month}-${date}`
+// let year = new Date().getFullYear(); // 년도
+// let month = new Date().getMonth();  // 월
+// let date = new Date().getDate();  // 날짜
+// let today = `${year}-${month}-${date}`
 
 
 exports.create_todo_list = async (req, res, next) => {
     try {
         const [todo_list, created] = await Todo_list.findOrCreate({
-            where : {date : today},
+            where : {date : req.body.date},
             attributes : ['id', 'title', 'share'],
             include : [
                 {
@@ -43,7 +43,7 @@ exports.create_todo_list = async (req, res, next) => {
 exports.get_todo_list = async (req, res, next) => {
     try {
         const todo_list = await Todo_list.findOne({
-            where : {date : today},
+            where : {date : req.params.date},
             include : [
                 {
                     model: User,

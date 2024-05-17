@@ -13,7 +13,7 @@ router.post('/', verifyToken ,create_todo_ele)
 //[GET] v1/todo_element/
 // router.get('/', get_todo_ele)
 
-//[GET] v1/todo_element/
+//[GET] v1/todo_element/:id (list_id)
 router.get('/:id', verifyToken ,get_todo_ele)
 
 //[PATCH] v1/todo_element/recur/:id
