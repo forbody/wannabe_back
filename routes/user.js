@@ -21,7 +21,7 @@ const imgUpload = multer({
 });
 
 // GET /v1/users/ - 모든 유저 정보 조회 [완료]
-router.get('/', verifyToken, getUsers)
+// router.get('/', verifyToken, getUsers)
 
 // GET /v1/users/:id - 특정 유저 정보 조회 [완료]
 router.get('/:id', verifyToken, getUser)
@@ -35,7 +35,7 @@ router.delete('/', verifyToken, deleteUser)
 // POST /v1/users/ - 유저 세부 정보 추가 [완료]
 router.post('/', verifyToken, addUserDetail)
 
-// POST /v1/posts/image - 유저 세부 정보 이미지 업로드
+// POST /v1/users/image - 유저 세부 정보 이미지 업로드
 router.post('/image', imgUpload.single('img'), uploadUserImg)
 
 // POST /v1/users/like - 유저 좋아요 [완료]

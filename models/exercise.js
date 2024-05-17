@@ -11,10 +11,11 @@ class Exercise extends Sequelize.Model {
             sort : {
                 type: Sequelize.STRING(50),
                 allowNull: false,
+                unique: false,
             },
             description : {
-                type: Sequelize.STRING(50),
-                allowNull: false,
+                type: Sequelize.TEXT,
+                allowNull: true,
             },
             img : {
                 type: Sequelize.STRING(255),
@@ -33,7 +34,7 @@ class Exercise extends Sequelize.Model {
         });
     }
     static associate(db) {
-        db.Exercise.belongsToMany(db.User, {  through: 'Exercise_follow' });
+        db.Exercise.belongsToMany(db.User, { as: "exerciseFollow", through: 'Exercise_follow' });
         db.Exercise.belongsToMany(db.Todo_element, {  through: 'Ele_exercise' });
         db.Exercise.belongsTo(db.Category);
     }

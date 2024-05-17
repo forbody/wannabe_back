@@ -1,12 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const userRouter = require('./user');
 const { createToken, join, refreshToken, kakaoLogin } = require('../controllers/auth');
+const userRouter = require('./user');
 const passport = require('passport');
 const todoEleRouter = require('./todo_element')
 const todoListRouter = require('./todo_list')
 const foodRouter = require('./food')
+const exerciseRouter = require('./exercise')
+const healthtipRouter = require('./health_tip')
 const todoShareRouter = require('./share')
+
 
 // POST /v1/auth/join - 회원가입
 router.post('/auth/join', join);
@@ -36,5 +39,10 @@ router.use('/todo_list/share', todoShareRouter)
 // /v1/food
 router.use('/food', foodRouter)
 
+// /v1/exercise
+router.use('/exercise', exerciseRouter)
+
+// /v1/tips
+router.use('/health_tip', healthtipRouter)
 
 module.exports = router;
