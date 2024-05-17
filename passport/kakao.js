@@ -20,7 +20,7 @@ module.exports = () => {
                 const newUser = await User.create({
                     user_name: profile.displayName,
                     kakao_id: profile.id,
-                    provider: 'kakao'
+                    provider: 'kakao',
                 })
                 done(null, newUser);
             }
