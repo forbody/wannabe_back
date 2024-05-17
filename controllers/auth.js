@@ -139,7 +139,7 @@ exports.kakaoLogin = async(req, res, next) => {
                     httpOnly: false,
                     secure: false
                 })
-                res.status(302).redirect(process.env.CLIENT_URL)
+                res.status(302).redirect(process.env.CLIENT_URL+'/todolist')
             })
         })(req, res, next)
     } catch (err) {
