@@ -46,7 +46,13 @@ exports.modifyUser = async (req, res, next) => {
             where: { UserId: req.user.id },
             order: [['createdAt', 'DESC']]
         })
-        await user.update({ user_name: req.body.user_name });
+        await user.update({ 
+            user_name: req.body.user_name, 
+            email: req.body.email, 
+            gender: req.body.gender, 
+            birthday: req.body.birthday,
+            role_model_id: req.body.bodyshape,
+        });
         await User_detail.update({
             height: req.body.height,
             weight:req.body.weight,
