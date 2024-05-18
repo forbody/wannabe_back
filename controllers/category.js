@@ -6,7 +6,7 @@ exports.get_category = async (req, res, next) => {
             where : {id : req.params.id},
             include: [
                 {
-                    model: '$Category.id$'==1 ? Exercise : Food,
+                    model: req.params.id==1 ? Exercise : Food,
                 }
             ]
         })
