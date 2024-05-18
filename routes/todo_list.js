@@ -10,8 +10,8 @@ router.post('/', verifyToken ,create_todo_list)
 //[GET] v1/todo_list/
 // router.get('/', get_todo_listAll)
 
-//[GET] v1/todo_list/
-router.get('/', verifyToken, get_todo_list )
+//[GET] v1/todo_list/ date를 파람으로넣어줘도되나..?
+router.get('/:date', verifyToken, get_todo_list)
 
 //[PATCH] v1/todo_list/:id
 router.patch('/:id', verifyToken, modify_todo_list)

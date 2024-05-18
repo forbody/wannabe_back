@@ -59,7 +59,7 @@ exports.join = async(req, res, next) => {
             gender,
             birthday,
             grade,
-            role_model_id
+            role_model_id: bodyshape
         });
         user.createUserDetail({
             height,
@@ -138,7 +138,7 @@ exports.kakaoLogin = async(req, res, next) => {
                     httpOnly: false,
                     secure: false
                 })
-                res.status(302).redirect(process.env.CLIENT_URL)
+                res.status(302).redirect(process.env.CLIENT_URL+'/todolist')
             })
         })(req, res, next)
     } catch (err) {

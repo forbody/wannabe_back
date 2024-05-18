@@ -1,18 +1,13 @@
 const { Sequelize } = require('sequelize');
 const { Todo_element, Categroy, Food , Exercise, Todo_list, User} = require('../models');
 
-let year = new Date().getFullYear(); // 년도
-let month = new Date().getMonth();  // 월
-let date = new Date().getDate();  // 날짜
-let today = `${year}-${month}-${date}`
-
 exports.create_todo_ele = async (req, res, next) => {
     try {
             const ele = await Todo_element.create({
                 category_id : req.body.category_id,
                 todo_id : req.body.todo_id,  //새로 컬럼 추가해야되는부분
                 UserId :req.user.id,
-                date : today, //req날짜를 위의 형식으로 보내야하니 나중에 수
+                date : req.body.date, //req날짜를 위의 형식으로 보내야하니 나중에 수
             })
             req.body.category_id==2 ? await ele.addFood(req.body.todo_id) :await ele.addExercise(req.body.todo_id)
             await ele.addTodo_list(req.body.todo_list_id) // todo_list_id 프론트에서 토큰id와 비교한값값을 통해 받아오면된다
@@ -100,7 +95,7 @@ exports.share_todo_list = async (req, res, next ) => {
                     category_id : e.category_id,
                     todo_id : e.todo_id,  //새로 컬럼 추가해야되는부분
                     UserId :req.user.id,
-                    date : today, //req날짜를 위의 형식으로 보내야하니 나중에 수
+                    date : req.body.date, //req날짜를 위의 형식으로 보내야하니 나중에 수
                 })
                 e.category_id==2 ? await ele.addFood(e.todo_id) :await ele.addExercise(e.todo_id)
                 await ele.addTodo_list(req.body.todo_list_id) // todo_list_id 프론트에서 토큰id와 비교한값값을 통해 받아오면된다

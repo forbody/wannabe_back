@@ -5,23 +5,23 @@ class User_detail extends Sequelize.Model {
         User_detail.init({
             height: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             weight: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             bmi: {
                 type: Sequelize.FLOAT,
-                allowNull: false,
+                allowNull: true,
             },
             bodyshape: {
                 type: Sequelize.STRING(50),
-                allowNull: false,
+                allowNull: true,
             },
             rec_cal : {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             img : {
                 type: Sequelize.STRING(255),

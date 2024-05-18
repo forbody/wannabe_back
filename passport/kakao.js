@@ -10,7 +10,7 @@ module.exports = () => {
         try {
             const exUser = await User.findOne({
                 where : {
-                    kakaoId: profile.id,
+                    kakao_id: profile.id,
                     provider:'kakao'
                 }
             });
@@ -18,9 +18,9 @@ module.exports = () => {
                 done(null, exUser);
             } else {
                 const newUser = await User.create({
-                    nickname: profile.displayName,
-                    kakaoId: profile.id,
-                    provider: 'kakao'
+                    user_name: profile.displayName,
+                    kakao_id: profile.id,
+                    provider: 'kakao',
                 })
                 done(null, newUser);
             }

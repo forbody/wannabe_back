@@ -71,7 +71,7 @@ app.use((err, req, res, next) => {
     console.error(err);
     res.locals.message = err.message;
     res.locals.error = process.env.NODE_ENV !== 'production' ? err : {};
-    res.status(err.status).json({
+    res.status(err.status || 500).json({
         code: err.status || 500,
         message: err.message || '서버 에러 발생'
     });

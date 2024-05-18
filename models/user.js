@@ -27,15 +27,15 @@ class User extends Sequelize.Model {
             },
             gender: {
                 type: Sequelize.ENUM("M", "F"),
-                allowNull: false,
+                allowNull: true,
             },
             birthday: {
                 type: Sequelize.DATE,
-                allowNull: false,
+                allowNull: true,
             },
             grade: {
                 type: Sequelize.STRING(50),
-                allowNull: false,
+                allowNull: true,
                 defaultValue: "normal",
             },
             role_model_id : {
