@@ -21,9 +21,4 @@ router.delete('/:id',verifyToken, delete_todo_list)
 
 
 
-
-
-
-
-
 module.exports = router;
