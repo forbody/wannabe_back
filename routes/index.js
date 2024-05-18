@@ -9,6 +9,7 @@ const foodRouter = require('./food')
 const exerciseRouter = require('./exercise')
 const healthtipRouter = require('./health_tip')
 const todoShareRouter = require('./share')
+const categoryRouter = require('./category')
 
 
 // POST /v1/auth/join - 회원가입
@@ -35,6 +36,9 @@ router.use('/todo_list', todoListRouter)
 
 // /v1/todo_list/share
 router.use('/todo_list/share', todoShareRouter)
+
+// /v1/category
+router.use('/category', categoryRouter)
 
 // /v1/food
 router.use('/food', foodRouter)
