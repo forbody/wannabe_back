@@ -16,13 +16,13 @@ router.post('/', verifyToken ,create_todo_ele)
 //[GET] v1/todo_element/:id (list_id)
 router.get('/:id', verifyToken ,get_todo_ele)
 
-//[PATCH] v1/todo_element/recur/:id
+//[PATCH] v1/todo_element/recur/:id (element_id)
 router.patch('/recur/:id', verifyToken , update_ele_recur)
 
-//[PATCH] v1/todo_element/achieve/:id
+//[PATCH] v1/todo_element/achieve/:id (element_id)
 router.patch('/achieve/:id', verifyToken , update_ele_achieve)
 
-//[PATCH] v1/todo_element/:id
+//[PATCH] v1/todo_element/:id (element_id)
 router.patch('/:id', verifyToken , update_todo_ele)
 
 //[DELETE] v1/todo_element/
