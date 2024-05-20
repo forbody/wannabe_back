@@ -1,13 +1,6 @@
 const { Sequelize } = require('sequelize');
 const { Todo_list ,User, Todo_element, share_comment } = require('../models');
 
-
-// let year = new Date().getFullYear(); // 년도
-// let month = new Date().getMonth();  // 월
-// let date = new Date().getDate();  // 날짜
-// let today = `${year}-${month}-${date}`
-
-
 exports.create_todo_list = async (req, res, next) => {
     try {
         const [todo_list, created] = await Todo_list.findOrCreate({
@@ -26,7 +19,7 @@ exports.create_todo_list = async (req, res, next) => {
             res.json({
                 code : 200,
                 message : 'todo_list created',
-                payload : todo_list.id
+                payload : {id : todo_list.id}
             })
         }
         res.json({
