@@ -21,7 +21,7 @@ const imgUpload = multer({
 });
 
 // GET /v1/users/ - 모든 유저 정보 조회 [완료]
-// router.get('/', verifyToken, getUsers)
+router.get('/', verifyToken, getUsers)
 
 // GET /v1/users/:id - 특정 유저 정보 조회 [완료]
 router.get('/:id', verifyToken, getUser)
@@ -44,10 +44,10 @@ router.post('/like', verifyToken, like)
 // DELETE /v1/users/like - 유저 좋아요 취소 [완료]
 router.delete('/like', verifyToken, unlike)
 
-// GET /v1/users/like/:id - 나를 좋아요 한 유저 조회 [완료]
-router.get('/likers/:id', verifyToken, getLikers)
+// GET /v1/users/:id/like - 나를 좋아요 한 유저 조회 [완료]
+router.get('/:id/likers', verifyToken, getLikers)
 
-// GET /v1/users/like/:id - 내가 좋아요 한 유저 조회 [완료]
-router.get('/likings/:id', verifyToken, getLikings)
+// GET /v1/users/:id/like - 내가 좋아요 한 유저 조회 [완료]
+router.get('/:id/likings', verifyToken, getLikings)
 
 module.exports = router;
