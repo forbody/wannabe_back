@@ -4,11 +4,11 @@ exports.upload_todo_list = async (req, res, next) => {
     try {
         await Share_comment.create({
             comment : req.body.comment,
-            TodoListId : req.params.id
+            TodoListId : req.body.listId
         })
         res.json({
             code : 200,
-            message : '공유가 완료되었습니다'
+            message : '공유가 완료되었습니다.',
         })
     } catch (err) {
         console.error(err);
@@ -19,8 +19,6 @@ exports.upload_todo_list = async (req, res, next) => {
 
 exports.modify_share_comment = async (req, res, next) => {
     try {
-        // 프론트 쪽에서 todo_list_id로 user비교해야하나???
-        // get_todo_list 를 이용하여 로그인 유저가 맞는지??확인해야하나..????
         await Share_comment.update({
             comment : req.body.comment
         }, {

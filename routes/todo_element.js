@@ -15,7 +15,7 @@ router.post('/', verifyToken ,create_todo_ele)
 router.get('/:id', verifyToken ,get_todo_ele)
 
 //[PATCH] v1/todo_element/recur/:id (element_id)
-router.patch('/recur/:id', verifyToken , update_ele_recur)
+// router.patch('/recur/:id', verifyToken , update_ele_recur)
 
 //[PATCH] v1/todo_element/achieve/:id (element_id)
 router.patch('/achieve/:id', verifyToken , update_ele_achieve)
@@ -27,7 +27,7 @@ router.patch('/:id', verifyToken , update_todo_ele)
 router.delete('/:id',verifyToken, delete_todo_ele)
 
 //[POST] v1/todo_element/
-router.post('/share',verifyToken, share_todo_list)
+// router.post('/share',verifyToken, share_todo_list)
 
 
 
