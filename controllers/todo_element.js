@@ -30,7 +30,10 @@ exports.get_todo_ele = async (req, res, next) => {
                 },
                 include: [
                     {
-                        model: '$Todo_element.category_id$'==1 ? Exercise : Food,
+                        model: Exercise
+                    },
+                    {
+                        model: Food
                     },
                     {
                         model: Todo_list,
@@ -152,7 +155,7 @@ exports.create_ele_recur = async (req, res, next ) => {
 exports.update_ele_achieve = async (req, res, next ) =>  {
     try {
         await Todo_element.update({
-                achieve : Sequelize.literal('Not achieve') // sequelize update toggle
+                achieve : Sequelize.literal('Not achieve')
             },{
                 where : {id :req.params.id}
             })
