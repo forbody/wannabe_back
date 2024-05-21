@@ -15,12 +15,12 @@ exports.createToken = async (req, res, next) => {
             // 정상 로그인
             return req.login(user, (err) => {
                 const accessToken = jwt.sign(
-                    { id: user.id, nickname: user.nickname},
+                    { id: user.id, nickname: user.user_name, grade: user.grade},
                     process.env.JWT_SECRET,
                     { expiresIn : '1d', issuer: "wannabe", subject: "accessToken"}
                 );
                 const refreshToken = jwt.sign(
-                    { id: user.id, nickname: user.nickname},
+                    { id: user.id, nickname: user.user_name, grade: user.grade},
                     process.env.JWT_SECRET,
                     { expiresIn : '7d', issuer: "wannabe", subject: "refreshToken"}
                 );
