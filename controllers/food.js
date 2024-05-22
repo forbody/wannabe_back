@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, sequelize } = require('../models');
 const { Food, Category } = require('../models');
 
 exports.uploadFood = async  (req, res, next) => {
@@ -415,8 +415,8 @@ exports.uploadFood = async  (req, res, next) => {
             { "name":"팔보채" , "calory":196, "sort" : "side_dish", "CategoryId" : 2},
             { "name":"풋고추멸치볶음" , "calory":94, "sort" : "side_dish", "CategoryId" : 2},
             { "name":"햄채소볶음" , "calory":401, "sort" : "side_dish", "CategoryId" : 2},
-            { "name":"귤" , "calory":9, "sort" : "dessertside_dish", "CategoryId" : 2},
-            { "name":"딸기" , "calory":34, "sort" : "dessertside_dish", "CategoryId" : 2},
+            { "name":"귤" , "calory":9, "sort" : "dessert", "CategoryId" : 2},
+            { "name":"딸기" , "calory":34, "sort" : "dessert", "CategoryId" : 2},
             { "name":"망고" , "calory":57, "sort" : "dessert", "CategoryId" : 2},
             { "name":"무화과" , "calory":54, "sort" : "dessert", "CategoryId" : 2},
             { "name":"배" , "calory":46, "sort" : "dessert", "CategoryId" : 2},
@@ -488,6 +488,23 @@ exports.getDish = async (req, res, next) => {
     }
 }
 
+// random
+exports.getRandomDishes = async (req, res, next) => {
+    try {
+        const [result] = await sequelize.query(
+            `(select * from food where sort = 'main_dish' order by rand() limit 1) union
+            (select * from food where sort = 'side_dish' order by rand() limit 3) union
+            (select * from food where sort = 'dessert' order by rand() limit 1);`
+        )
+        res.json({
+            code: 200,
+            result
+        })
+    } catch (error) {
+        console.error(error);
+        next(error);;
+    }
+}
 // 하루 권장 칼로리 섭취량 제공
 
 // 오늘 섭취한 칼로리 입력
