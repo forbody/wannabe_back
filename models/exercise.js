@@ -37,6 +37,7 @@ class Exercise extends Sequelize.Model {
         db.Exercise.belongsToMany(db.User, { as: "exerciseFollow", through: 'Exercise_follow' });
         db.Exercise.belongsToMany(db.Todo_element, {  through: 'Ele_exercise' });
         db.Exercise.belongsTo(db.Category);
+        db.Exercise.belongsToMany(db.Health_tip, {through : 'ExerciseHealthTip'});
     }
 };
 
