@@ -1,5 +1,5 @@
-const { User, sequelize } = require('../models');
-const { Food, Category, Todo_element } = require('../models');
+const { sequelize } = require('../models');
+const { Food, Todo_element } = require('../models');
 const moment = require('moment');
 
 exports.uploadFood = async  (req, res, next) => {
@@ -455,7 +455,7 @@ exports.uploadFood = async  (req, res, next) => {
 //         console.error(error);
 //         next(error);
 //     }
-// }
+// } => 대신 water DB 사용중입니다
 
 // 음식들 가져오기
 exports.getDishes = async (req, res, next) => {
@@ -489,7 +489,7 @@ exports.getDish = async (req, res, next) => {
     }
 }
 
-// random
+// 랜덤 음식 5개 가져오기
 exports.getRandomDishes = async (req, res, next) => {
     try {
         const [result] = await sequelize.query(
@@ -507,10 +507,10 @@ exports.getRandomDishes = async (req, res, next) => {
     }
 }
 
+// 랜덤 음식 5개 가져와서 아점저 중에 골라 todo_element에 집어넣기 ( 이미 아점저가 존재하면 true 반환, 아점저가 없으면 5개 랜덤 선택해서 생성)
 exports.getTodayDishes = async(req, res, next) => {
     try {
         const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)
-
         const addedMeal = await Todo_element.findOne({
             where: {
                 order: orderMeal,
@@ -534,7 +534,6 @@ exports.getTodayDishes = async(req, res, next) => {
                         }
                     }]
             })
-
         } else {
             // random
             [result] = await sequelize.query(
@@ -543,7 +542,6 @@ exports.getTodayDishes = async(req, res, next) => {
                 (select * from food where sort = 'dessert' order by rand() limit 1);`
             )
         }
-
         res.json({
             code: 200,
             isAdded,
