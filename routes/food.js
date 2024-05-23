@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { uploadFood , watercount, getDishes, getDish, getRandomDishes } = require('../controllers/food');
+const { uploadFood , watercount, getDishes, getDish, getRandomDishes, getTodayDishes } = require('../controllers/food');
 const { verifyToken } = require('../middlewares');
 
 
@@ -12,6 +12,7 @@ router.get('/', uploadFood)
 
 // v1/food/sort/:sort
 router.get('/sort/:sort', verifyToken, getDishes)
+router.post('/today-dish', verifyToken, getTodayDishes);
 
 router.get('/random-dish', verifyToken, getRandomDishes);
 // v1/food/:id
