@@ -1,12 +1,5 @@
 const { Sequelize } = require('sequelize');
-const { Todo_list ,User, Todo_element, share_comment } = require('../models');
-
-
-// let year = new Date().getFullYear(); // 년도
-// let month = new Date().getMonth();  // 월
-// let date = new Date().getDate();  // 날짜
-// let today = `${year}-${month}-${date}`
-
+const { Todo_list ,User, Todo_element, Share_comment } = require('../models');
 
 exports.create_todo_list = async (req, res, next) => {
     try {
@@ -26,7 +19,7 @@ exports.create_todo_list = async (req, res, next) => {
             res.json({
                 code : 200,
                 message : 'todo_list created',
-                payload : todo_list.id
+                payload : {id : todo_list.id}
             })
         }
         res.json({
@@ -40,6 +33,35 @@ exports.create_todo_list = async (req, res, next) => {
     }
 }
 // 전체 리스트 받아오기도 하나 만들어야할듯..??????
+exports.get_todo_list_all = async (req, res, next) => {
+    try {
+        const todo_list = await Todo_list.findAll({
+            where : {share : true},
+            include : [
+                {
+                    model: User,
+                    attributes : ['id', 'email', 'user_name'],
+                },
+                {
+                    model: Todo_element,
+                    attributes : ['id', 'category_id' , 'todo_id']
+                },
+                {
+                    model : Share_comment
+                }
+            ]
+        })
+        res.json({
+            code : 200,
+            payload :todo_list
+        })
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+}
+
+
 exports.get_todo_list = async (req, res, next) => {
     try {
         const todo_list = await Todo_list.findOne({
@@ -54,6 +76,9 @@ exports.get_todo_list = async (req, res, next) => {
                     model: Todo_element,
                     attributes : ['id', 'category_id' , 'todo_id']
                 },
+                {
+                    model : Share_comment
+                }
             ]
         })
         res.json({
@@ -68,19 +93,14 @@ exports.get_todo_list = async (req, res, next) => {
 
 exports.modify_todo_list = async (req, res, next) => {
     try {   
-            // const temp = await Todo_list.findOne({
-            //     where : {id : req.params.id},
-            //     attribute  : ['share']
-            // })
-            // const share = temp.dataValues.share
-            await Todo_element.update({
-                share : Sequelize.literal('Not share') // sequelize update toggle
+            await Todo_list.update({
+                share : Sequelize.literal('Not share') 
             },{
                 where : {id :req.params.id}
             })
             res.json({
                 code : 200,
-                message : 'todo_achieve 수정완료'
+                message : 'todo_list share 수정완료'
             })
     } catch (err) {
         console.error(err);
