@@ -8,7 +8,7 @@ const { verifyToken } = require('../middlewares');
 router.get('/', uploadFood)
 
 // v1/food/watercount
-router.get('/watercount', watercount);
+// router.get('/watercount', watercount);
 
 // v1/food/sort/:sort
 router.get('/sort/:sort', verifyToken, getDishes)

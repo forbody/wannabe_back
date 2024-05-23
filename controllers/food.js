@@ -443,18 +443,18 @@ exports.uploadFood = async  (req, res, next) => {
 }
 
 // 물 마신 횟수를 유저 정보에서 따오기
-exports.watercount = async (req, res, next) => {
-    console.log('물 마신 횟수 체크');
-    try {
-        const Count = await User.findAll({
-            where : { id : req.params.id }
-        })
-        res.json(Count);
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
-}
+// exports.watercount = async (req, res, next) => {
+//     console.log('물 마신 횟수 체크');
+//     try {
+//         const Count = await User.findAll({
+//             where : { id : req.params.id }
+//         })
+//         res.json(Count);
+//     } catch (error) {
+//         console.error(error);
+//         next(error);
+//     }
+// }
 
 // 음식들 가져오기
 exports.getDishes = async (req, res, next) => {

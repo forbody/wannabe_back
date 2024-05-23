@@ -28,7 +28,6 @@ exports.getUser = async (req, res, next) => {
             where: { id: req.params.id },
             include: [{ model: User_detail, as: 'UserDetail' }]
         });
-        
         res.json ({
             code: 200,
             payload: user || {}
