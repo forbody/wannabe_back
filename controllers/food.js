@@ -1,5 +1,6 @@
 const { User, sequelize } = require('../models');
-const { Food, Category } = require('../models');
+const { Food, Category, Todo_element } = require('../models');
+const moment = require('moment');
 
 exports.uploadFood = async  (req, res, next) => {
     try {
@@ -498,6 +499,54 @@ exports.getRandomDishes = async (req, res, next) => {
         )
         res.json({
             code: 200,
+            result
+        })
+    } catch (error) {
+        console.error(error);
+        next(error);;
+    }
+}
+
+exports.getTodayDishes = async(req, res, next) => {
+    try {
+        const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)
+
+        const addedMeal = await Todo_element.findOne({
+            where: {
+                order: orderMeal,
+                date: moment().format('YYYY-MM-DD'),
+                UserId : req.user.id
+            }
+        });
+        const isAdded = Boolean(addedMeal);
+        let result;
+        if (isAdded) {
+            // already bring
+            // SELECT f.* FROM food f JOIN todo_elements te ON f.id = te.todo_id where te.user_id = 10 and te.deleted_at is null and te.order = 2 and date='2024-05-23';
+            result = await Food.findAll({
+                    include: [{
+                        model: Todo_element,
+                        where:
+                        {
+                            order: orderMeal,
+                            date: moment().format('YYYY-MM-DD'),
+                            UserId : req.user.id
+                        }
+                    }]
+            })
+
+        } else {
+            // random
+            [result] = await sequelize.query(
+                `(select * from food where sort = 'main_dish' order by rand() limit 1) union
+                (select * from food where sort = 'side_dish' order by rand() limit 3) union
+                (select * from food where sort = 'dessert' order by rand() limit 1);`
+            )
+        }
+
+        res.json({
+            code: 200,
+            isAdded,
             result
         })
     } catch (error) {

@@ -92,6 +92,7 @@ exports.delete_todo_ele = async (req, res, next) => {
 
 exports.share_todo_list = async (req, res, next ) => {
     try {
+            const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)
             const arr = req.body.arr
             arr.map(async e =>  {
                 const ele = await Todo_element.create({
@@ -99,6 +100,7 @@ exports.share_todo_list = async (req, res, next ) => {
                     todo_id : e.todo_id,  //새로 컬럼 추가해야되는부분
                     UserId :req.user.id,
                     date : req.body.date, //req날짜를 위의 형식으로 보내야하니 나중에 수
+                    order : orderMeal
                 })
                 e.category_id==2 ? await ele.addFood(e.todo_id) :await ele.addExercise(e.todo_id)
                 await ele.addTodo_list(req.body.todo_list_id) // todo_list_id 프론트에서 토큰id와 비교한값값을 통해 받아오면된다
