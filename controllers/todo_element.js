@@ -91,7 +91,7 @@ exports.delete_todo_ele = async (req, res, next) => {
 
 exports.share_todo_list = async (req, res, next ) => {
     try {
-            const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)
+            const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)|| req.body.order
             const arr = req.body.arr
             arr.map(async e =>  {
                 const todo_id = e.todo_id ? e.todo_id : e.id
