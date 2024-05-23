@@ -32,7 +32,7 @@ exports.create_todo_list = async (req, res, next) => {
         next(err)
     }
 }
-// 전체 리스트 받아오기도 하나 만들어야할듯..??????
+
 exports.get_todo_list_all = async (req, res, next) => {
     try {
         const todo_list = await Todo_list.findAll({
@@ -41,10 +41,6 @@ exports.get_todo_list_all = async (req, res, next) => {
                 {
                     model: User,
                     attributes : ['id', 'email', 'user_name'],
-                },
-                {
-                    model: Todo_element,
-                    attributes : ['id', 'category_id' , 'todo_id']
                 },
                 {
                     model : Share_comment

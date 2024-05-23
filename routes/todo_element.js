@@ -26,8 +26,8 @@ router.patch('/:id', verifyToken , update_todo_ele)
 //[DELETE] v1/todo_element/
 router.delete('/:id',verifyToken, delete_todo_ele)
 
-//[POST] v1/todo_element/
-// router.post('/share',verifyToken, share_todo_list)
+//[POST] v1/todo_element/share
+router.post('/share',verifyToken, share_todo_list)
 
 
 
