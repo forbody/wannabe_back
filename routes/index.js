@@ -6,6 +6,7 @@ const passport = require('passport');
 const todoEleRouter = require('./todo_element')
 const todoListRouter = require('./todo_list')
 const foodRouter = require('./food')
+const waterRouter = require('./water')
 const exerciseRouter = require('./exercise')
 const healthtipRouter = require('./health_tip')
 const todoShareRouter = require('./share')
@@ -42,6 +43,9 @@ router.use('/category', categoryRouter)
 
 // /v1/food
 router.use('/food', foodRouter)
+
+// /v1/water
+router.use('/water', waterRouter)
 
 // /v1/exercise
 router.use('/exercise', exerciseRouter)

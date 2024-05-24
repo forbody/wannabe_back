@@ -1,4 +1,5 @@
 const { User, User_detail } = require('../models');
+const { sequelize } = require('../models');
 
 exports.uploadUserImg = (req, res) => {
     res.json({
@@ -28,7 +29,6 @@ exports.getUser = async (req, res, next) => {
             where: { id: req.params.id },
             include: [{ model: User_detail, as: 'UserDetail' }]
         });
-        
         res.json ({
             code: 200,
             payload: user || {}
@@ -205,5 +205,26 @@ exports.getLikings = async (req, res, next) => {
     }catch (err) {
         console.error(err);
         next(err);
+    }
+}
+
+// 랜덤 셀러브리티 3명 가져오기
+exports.getRandomRoleModels = async (req, res, next) => {
+    try {
+        const [results, metadata] = await sequelize.query(
+            `(select * from users u
+                JOIN user_details ud
+                ON u.id = ud.user_id
+                where u.grade = 'celebrity'
+                order by rand()
+                limit 3)`
+        )
+        res.json({
+            code: 200,
+            result: results
+        })
+    } catch (error) {
+        console.error(error);
+        next(error);;
     }
 }
