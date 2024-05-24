@@ -36,8 +36,6 @@ exports.modify_share_comment = async (req, res, next) => {
 
 exports.delete_share_comment = async (req, res, next ) => {
     try {
-        // 프론트 쪽에서 todo_list_id로 user비교해야하나???
-        // get_todo_list 를 이용하여 로그인 유저가 맞는지??확인해야하나..????
         await Share_comment.destroy({
             where : {id : req.params.id}
         })

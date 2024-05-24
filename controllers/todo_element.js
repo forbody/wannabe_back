@@ -5,9 +5,10 @@ exports.create_todo_ele = async (req, res, next) => {
     try {
             const ele = await Todo_element.create({
                 category_id : req.body.category_id,
-                todo_id : req.body.todo_id,  //새로 컬럼 추가해야되는부분
+                todo_id : req.body.todo_id,  
                 UserId :req.user.id,
-                date : req.body.date, //req날짜를 위의 형식으로 보내야하니 나중에 수
+                order: req.body.order,
+                date : req.body.date, 
             })
             req.body.category_id==2 ? await ele.addFood(req.body.todo_id) :await ele.addExercise(req.body.todo_id)
             await ele.addTodo_list(req.body.todo_list_id) // todo_list_id 프론트에서 토큰id와 비교한값값을 통해 받아오면된다
@@ -25,9 +26,7 @@ exports.create_todo_ele = async (req, res, next) => {
 exports.get_todo_ele = async (req, res, next) => {
     try {
             const ele = await Todo_element.findAll({
-                where : {
-                    user_id : req.user.id,
-                },
+                order: [['achieve', 'ASC']],
                 include: [
                     {
                         model: Exercise
@@ -92,17 +91,19 @@ exports.delete_todo_ele = async (req, res, next) => {
 
 exports.share_todo_list = async (req, res, next ) => {
     try {
-            const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)
+            const orderMeal = (req.body.meal === '아침' ? 1 : req.body.meal === '점심' ? 2 : 3)|| req.body.order
             const arr = req.body.arr
             arr.map(async e =>  {
+                const todo_id = e.todo_id ? e.todo_id : e.id
+                const category_id = e.category_id ? e.category_id : e.CategoryId
                 const ele = await Todo_element.create({
-                    category_id : e.category_id,
-                    todo_id : e.todo_id,  //새로 컬럼 추가해야되는부분
+                    category_id :  category_id,
+                    todo_id : todo_id,  
                     UserId :req.user.id,
                     date : req.body.date, //req날짜를 위의 형식으로 보내야하니 나중에 수
                     order : orderMeal
                 })
-                e.category_id==2 ? await ele.addFood(e.todo_id) :await ele.addExercise(e.todo_id)
+                category_id==2 ? await ele.addFood(todo_id) :await ele.addExercise(todo_id)
                 await ele.addTodo_list(req.body.todo_list_id) // todo_list_id 프론트에서 토큰id와 비교한값값을 통해 받아오면된다
             })
             res.json({
