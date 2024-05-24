@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
 const { User, User_detail } = require('../models');
 const { sequelize } = require('../models');
 
@@ -211,14 +212,19 @@ exports.getLikings = async (req, res, next) => {
 // 랜덤 셀러브리티 3명 가져오기
 exports.getRandomRoleModels = async (req, res, next) => {
     try {
-        const [results, metadata] = await sequelize.query(
-            `(select * from users u
-                JOIN user_details ud
-                ON u.id = ud.user_id
-                where u.grade = 'celebrity'
-                order by rand()
-                limit 3)`
-        )
+        const results = await User.findAll({
+            order: Sequelize.literal('rand()'), limit: 3,
+            where: {grade : `celebrity`},
+            include: [{ model: User_detail, as: 'UserDetail' }]
+        })
+        // const [results, metadata] = await sequelize.query(
+        //     `(select * from users u
+        //         JOIN user_details ud
+        //         ON u.id = ud.user_id
+        //         where u.grade = 'celebrity'
+        //         order by rand()
+        //         limit 3)`
+        // )
         res.json({
             code: 200,
             result: results

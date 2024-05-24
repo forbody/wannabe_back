@@ -17,7 +17,7 @@ exports.createToken = async (req, res, next) => {
                 const accessToken = jwt.sign(
                     { id: user.id, nickname: user.user_name, grade: user.grade},
                     process.env.JWT_SECRET,
-                    { expiresIn : '1d', issuer: "wannabe", subject: "accessToken"}
+                    { expiresIn : '10s', issuer: "wannabe", subject: "accessToken"}
                 );
                 const refreshToken = jwt.sign(
                     { id: user.id, nickname: user.user_name, grade: user.grade},
@@ -84,14 +84,15 @@ exports.refreshToken = async (req, res, next) => {
         const { accessToken } = req.body;
         const accessResult = jwt.decode(accessToken, process.env.JWT_SECRET);
         const user = await User.findOne({ where: { id : accessResult.id }});
-        const refreshResult = jwt.verify(user.refreshToken, process.env.JWT_SECRET)
+        console.log(user);
+        const refreshResult = jwt.verify(user.refresh_token, process.env.JWT_SECRET)
         if (accessResult.id !== refreshResult.id){
             throw new Error ("토큰이 일치하지 않습니다.")
         }
         const newAccessToken = jwt.sign( // 토큰 속 id가 일치하면 새로운 토큰을 준다.
             { id: accessResult.id, user_name: accessResult.user_name},
             process.env.JWT_SECRET,
-            { expiresIn : '1d', issuer: "wannabe", subject: "accessToken"}
+            { expiresIn : '10s', issuer: "wannabe", subject: "accessToken"}
         );
         res.json({
             code: 200,
