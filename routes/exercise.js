@@ -7,7 +7,7 @@ const { verifyToken } = require('../middlewares');
 
 
 // /v1/exercise/ [GET - 전체 운동data 조회]
-router.get('/', getExercises);
+router.get('/', verifyToken, getExercises);
 
 // sort별로 운동 목록을 조회할 수 있다. 이미지조회(썸네일)
 // /v1/exercise/sort
