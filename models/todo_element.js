@@ -26,6 +26,16 @@ class Todo_element extends Sequelize.Model {
             order : {
                 type : Sequelize.INTEGER,
                 defaultValue : false
+            },
+            sets : {
+                type : Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue : false
+            },
+            reps : {
+                type : Sequelize.INTEGER,
+                allowNull: true,
+                defaultValue : false
             }
         }, {
             sequelize,
