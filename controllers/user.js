@@ -95,7 +95,7 @@ exports.addUserDetail = async (req, res, next) => {
         await User_detail.create({
             height,
             weight,
-            bmi: height / weight * weight,
+            bmi: height / weight / weight,
             bodyshape,
             rec_cal: weight * 30,
             img,
