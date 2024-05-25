@@ -56,6 +56,30 @@ exports.get_todo_list_all = async (req, res, next) => {
         next(err)
     }
 }
+exports.get_todo_list_my = async (req, res, next) => {
+    try {
+        const todo_list = await Todo_list.findAll({
+            where : {share : true},
+            include : [
+                {
+                    model: User,
+                    attributes : ['id', 'email', 'user_name'],
+                    where : {id : req.user.id}
+                },
+                {
+                    model : Share_comment
+                }
+            ]
+        })
+        res.json({
+            code : 200,
+            payload :todo_list
+        })
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+}
 
 
 exports.get_todo_list = async (req, res, next) => {
