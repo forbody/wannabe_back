@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, getUser, modifyUser, deleteUser, addUserDetail, uploadUserImg, getLikings, getLikers, like, unlike, getRandomRoleModels } = require('../controllers/user')
+const { getUsers, getUser, modifyUser, modifyRoleModel, deleteUser, addUserDetail, uploadUserImg, getLikings, getLikers, like, unlike, getRandomRoleModels } = require('../controllers/user')
 const { verifyToken } = require("../middlewares")
 const multer = require('multer');
 const path = require('path')
@@ -26,6 +26,9 @@ router.get('/random-rolemodel', verifyToken, getRandomRoleModels);
 // GET /v1/users/ - 모든 유저 정보 조회 [완료]
 router.get('/', verifyToken, getUsers)
 
+// PATCH /v1/users/rolemodel - 유저 롤모델 정보 수정 [완료]
+router.patch('/rolemodel', verifyToken, modifyRoleModel)
+
 // PATCH /v1/users/ - 유저 정보 수정 [완료]
 router.patch('/', verifyToken, modifyUser)
 
@@ -44,14 +47,13 @@ router.post('/like', verifyToken, like)
 // DELETE /v1/users/like - 유저 좋아요 취소 [완료]
 router.delete('/like', verifyToken, unlike)
 
-// GET /v1/users/:id - 특정 유저 정보 조회 [완료]
-router.get('/:id', verifyToken, getUser)
-
 // GET /v1/users/:id/like - 나를 좋아요 한 유저 조회 [완료]
 router.get('/:id/likers', verifyToken, getLikers)
 
 // GET /v1/users/:id/like - 내가 좋아요 한 유저 조회 [완료]
 router.get('/:id/likings', verifyToken, getLikings)
 
+// GET /v1/users/:id - 특정 유저 정보 조회 [완료]
+router.get('/:id', verifyToken, getUser)
 
 module.exports = router;
