@@ -95,7 +95,7 @@ exports.addUserDetail = async (req, res, next) => {
         await User_detail.create({
             height,
             weight,
-            bmi: height / weight * weight,
+            bmi: height / weight / weight,
             bodyshape,
             rec_cal: weight * 30,
             img,
@@ -229,8 +229,26 @@ exports.getRandomRoleModels = async (req, res, next) => {
             code: 200,
             result: results
         })
-    } catch (error) {
-        console.error(error);
-        next(error);;
+    } catch (err) {
+        console.error(err);
+        next(err);;
+    }
+}
+
+// 롤모델 바꾸기
+exports.modifyRoleModel = async (req, res, next) => {
+    try {
+        const user = await User.findByPk(req.user.id)
+        console.log('aaaaaaaaaaaaaaaa', req);
+        await user.update({ 
+            role_model_id: req.body.role_model_id
+        });
+        res.json({
+            code: 200,
+            message: '유저 수정 완료'
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
     }
 }
