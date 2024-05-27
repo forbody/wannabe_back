@@ -6,7 +6,10 @@ exports.Health_tip = async (req, res, next) => {
 
     try {
         const healthtips = await Health_tip.findAll();
-        res.json(healthtips);
+        res.json({
+            code : 200,
+            payload : healthtips
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -19,7 +22,10 @@ exports.getTip = async(req, res, next) => {
     const healthTips = await Health_tip.findAll();
     const rand_idx = Math.floor(Math.random() * healthTips.length)
     const healthTip = healthTips[rand_idx];
-    res.json(healthTip);
+    res.json({
+        code : 200,
+        payload : healthTip
+    });
 }
 
 exports.dummyTip = async(req, res, next) => {

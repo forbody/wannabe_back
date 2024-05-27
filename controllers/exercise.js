@@ -9,7 +9,10 @@ exports.getExercises = async (req, res, next) => {
     // 추가할 기능 -> 유저가 로그인 했을 경우 좋아요 표시한 운동 목록 조회 가능 기능 구현
     try {
         const exercises = await Exercise.findAll();
-        res.json(exercises);
+        res.json({
+            code : 200,
+            payload : exercises
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -23,7 +26,10 @@ exports.sortExercise = async (req,res,next) => {
         const exercises = await Exercise.findAll({
             where: {sort: req.query.q}
         });
-        res.json(exercises);
+        res.json({
+            code : 200,
+            payload : exercises
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -69,7 +75,10 @@ exports.exerciseInfo = async (req,res,next) => {
             where : { id : req.params.id },
             // attributes: ['description', 'url']  -> react로 원하는 속성값 가져올 수 있음!
         })
-        res.json(exercise_info);
+        res.json({
+            code : 200,
+            payload : exercise_info
+        });
     } catch (error) {
         console.error(error);
         next(error);
