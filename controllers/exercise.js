@@ -6,7 +6,6 @@ app.use(express.static('img'));
 
 exports.getExercises = async (req, res, next) => {
     console.log('전체 운동data 조회');
-    // 추가할 기능 -> 유저가 로그인 했을 경우 좋아요 표시한 운동 목록 조회 가능 기능 구현
     try {
         const exercises = await Exercise.findAll();
         res.json({
@@ -20,12 +19,17 @@ exports.getExercises = async (req, res, next) => {
 }
 
 exports.sortExercise = async (req,res,next) => {
-    console.log(req.query.q);
-    console.log('sort별 운동 목록 조회');
+    console.log('sort 운동data 조회');
     try {
-        const exercises = await Exercise.findAll({
-            where: {sort: req.query.q}
-        });
+        const sortArr = req.query.sort;
+        let exercises;
+        if (!sortArr) {
+            exercises = []
+        } else {
+            exercises = await Exercise.findAll({
+                where: {sort: sortArr}
+            });
+        }
         res.json({
             code : 200,
             payload : exercises
@@ -37,35 +41,35 @@ exports.sortExercise = async (req,res,next) => {
 }
 
 // sort별 운동 목록 나누기
-exports.getExercisesBySort = async (req, res, next) => {
-    try {
-        const exercises = await Exercise.findAll();
-        const groupedExercises = {};
+// exports.getExercisesBySort = async (req, res, next) => {
+//     try {
+//         const exercises = await Exercise.findAll();
+//         const groupedExercises = {};
 
-        // sort별로 그룹화
-        exercises.forEach(exercise => {
-            const sort = exercise.sort;
-            if (!groupedExercises[sort]) {
-                groupedExercises[sort] = [];
-            }
-            groupedExercises[sort].push(exercise);
-        });
+//         // sort별로 그룹화
+//         exercises.forEach(exercise => {
+//             const sort = exercise.sort;
+//             if (!groupedExercises[sort]) {
+//                 groupedExercises[sort] = [];
+//             }
+//             groupedExercises[sort].push(exercise);
+//         });
 
-        // 각 그룹에서 최대 5개씩만 포함
-        for (const sort in groupedExercises) {
-            groupedExercises[sort] = groupedExercises[sort].slice(0, 6);
-        }
+//         // 각 그룹에서 최대 5개씩만 포함
+//         for (const sort in groupedExercises) {
+//             groupedExercises[sort] = groupedExercises[sort].slice(0, 6);
+//         }
 
-        res.json({
-            code: 200,
-            data: groupedExercises,
-            message: '운동 목록을 성공적으로 가져왔습니다.'
-        });
-    } catch (error) {
-        console.error(error);
-        next(error);
-    }
-}
+//         res.json({
+//             code: 200,
+//             data: groupedExercises,
+//             message: '운동 목록을 성공적으로 가져왔습니다.'
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         next(error);
+//     }
+// }
 
 
 exports.exerciseInfo = async (req,res,next) => {
