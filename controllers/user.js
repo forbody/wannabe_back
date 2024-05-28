@@ -163,7 +163,7 @@ exports.getLikers = async (req, res, next) => {
             ]
         });
         if (user) {
-            const likings = await user.getLikings({
+            const likings = await user.getLikers({
             })
             res.json({
                 code: 200,
@@ -191,7 +191,7 @@ exports.getLikings = async (req, res, next) => {
             ]
         });
         if (user) {
-            const likers = await user.getLikers({
+            const likers = await user.getLikings({
             })
             res.json({
                 code: 200,
