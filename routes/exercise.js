@@ -11,12 +11,12 @@ router.get('/', verifyToken, getExercises);
 
 // sort별로 운동 목록을 조회할 수 있다. 이미지조회(썸네일)
 // /v1/exercise/sort
-router.get('/sort', sortExercise);
-// /v1/exercise/sort?q=가슴 -> 가슴 운동 종류만 조회가능
+router.get('/sort', verifyToken, sortExercise);
+// /v1/exercise/sort?sort=가슴 -> 가슴 운동 종류만 조회가능
 
 // sort별 최대 6개씩 목록 구현
 // /v1/exercise/sort/getsort
-router.get('/sort/getsort', getExercisesBySort);
+// router.get('/sort/getsort', getExercisesBySort);
 
 // 운동 데이터 저장
 // router.get('/phj/secret', hiddenInsert);
