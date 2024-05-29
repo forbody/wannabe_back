@@ -26,31 +26,31 @@ router.get('/auth/kakao/callback', kakaoLogin);
 // POST /v1/auth/refresh - 새 토큰 발급
 router.post('/auth/refresh', refreshToken);
 
-// USE /v1/users
-router.use('/users', userRouter); // v1뒤에 users를 붙여서 보낸다.
+// /v1/users
+router.use('/users', userRouter);
 
 // /v1/todo_element
-router.use('/todo_element', todoEleRouter)
+router.use('/todo_element', todoEleRouter);
 
 // /v1/todo_list
-router.use('/todo_list', todoListRouter)
+router.use('/todo_list', todoListRouter);
 
 // /v1/todo_list/share
-router.use('/todo_list/share', todoShareRouter)
+router.use('/todo_list/share', todoShareRouter);
 
 // /v1/category
-router.use('/category', categoryRouter)
+router.use('/category', categoryRouter);
 
 // /v1/food
-router.use('/food', foodRouter)
+router.use('/food', foodRouter);
 
 // /v1/water
-router.use('/water', waterRouter)
+router.use('/water', waterRouter);
 
 // /v1/exercise
-router.use('/exercise', exerciseRouter)
+router.use('/exercise', exerciseRouter);
 
 // /v1/health_tip
-router.use('/health_tip', healthtipRouter)
+router.use('/health_tip', healthtipRouter);
 
 module.exports = router;
