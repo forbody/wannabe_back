@@ -17,7 +17,7 @@ exports.createToken = async (req, res, next) => {
                 const accessToken = jwt.sign(
                     { id: user.id, nickname: user.user_name, grade: user.grade},
                     process.env.JWT_SECRET,
-                    { expiresIn : '1d', issuer: "wannabe", subject: "accessToken"}
+                    { expiresIn : '10s', issuer: "wannabe", subject: "accessToken"}
                 );
                 const refreshToken = jwt.sign(
                     { id: user.id, nickname: user.user_name, grade: user.grade},
@@ -45,7 +45,7 @@ exports.createToken = async (req, res, next) => {
 
 exports.join = async(req, res, next) => {
     console.log(req.body);
-    const { email, user_name, password, gender, birthday, grade, role_model_id, height, weight, bodyshape, img} = req.body;
+    const { email, user_name, password, gender, birthday, grade, height, weight, bodyshape, img} = req.body;
     try{
         const exUser = await User.findOne({ where: { email }});
         if (exUser) {
@@ -92,7 +92,7 @@ exports.refreshToken = async (req, res, next) => {
         const newAccessToken = jwt.sign( // 토큰 속 id가 일치하면 새로운 토큰을 준다.
             { id: accessResult.id, user_name: accessResult.user_name},
             process.env.JWT_SECRET,
-            { expiresIn : '1d', issuer: "wannabe", subject: "accessToken"}
+            { expiresIn : '10s', issuer: "wannabe", subject: "accessToken"}
         );
         res.json({
             code: 200,
@@ -118,13 +118,13 @@ exports.kakaoLogin = async(req, res, next) => {
                 const accessToken = jwt.sign(
                     { id: user.id, user_name: user.user_name},
                     process.env.JWT_SECRET,
-                    { expiresIn : '1d', issuer: "wannabe", subject: "accessToken"}
+                    { expiresIn : '10s', issuer: "wannabe", subject: "accessToken"}
                 );
 
                 const refreshToken = jwt.sign(
                     { id: user.id, user_name: user.user_name},
                     process.env.JWT_SECRET,
-                    { expiresIn : '7d', issuer: "wannabe", subject: "refreshToken"}
+                    { expiresIn : '10s', issuer: "wannabe", subject: "refreshToken"}
                 );
                 User.update({ refresh_token: refreshToken }, { where : { id: user.id }})
                 if (err) {

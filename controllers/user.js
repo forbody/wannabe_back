@@ -235,17 +235,33 @@ exports.getRandomRoleModels = async (req, res, next) => {
     }
 }
 
-// 롤모델 바꾸기
+// 유저 롤모델 정보 수정
 exports.modifyRoleModel = async (req, res, next) => {
     try {
         const user = await User.findByPk(req.user.id)
-        console.log('aaaaaaaaaaaaaaaa', req);
         await user.update({ 
             role_model_id: req.body.role_model_id
         });
         res.json({
             code: 200,
             message: '유저 수정 완료'
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
+    }
+}
+
+// 리프레시 토큰 수정
+exports.modifyRefreshToken = async (req, res, next) => {
+    try {
+        const user = await User.findByPk(req.user.id)
+        await user.update({ 
+            refresh_token: req.body.refresh_token
+        });
+        res.json({
+            code: 200,
+            message: '리프레시 토큰 수정 완료'
         });
     } catch (err) {
         console.error(err);
