@@ -1,4 +1,4 @@
-const { Exercise, Category } = require('../models');
+const { Exercise, Category, Health_tip , User} = require('../models');
 const express = require('express')
 const app = express()
 
@@ -6,10 +6,12 @@ app.use(express.static('img'));
 
 exports.getExercises = async (req, res, next) => {
     console.log('전체 운동data 조회');
-    // 추가할 기능 -> 유저가 로그인 했을 경우 좋아요 표시한 운동 목록 조회 가능 기능 구현
     try {
         const exercises = await Exercise.findAll();
-        res.json(exercises);
+        res.json({
+            code : 200,
+            payload : exercises
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -17,18 +19,58 @@ exports.getExercises = async (req, res, next) => {
 }
 
 exports.sortExercise = async (req,res,next) => {
-    console.log(req.query.q);
-    console.log('sort별 운동 목록 조회');
+    console.log('sort 운동data 조회');
     try {
-        const exercises = await Exercise.findAll({
-            where: {sort: req.query.q}
+        const sortArr = req.query.sort;
+        let exercises;
+        if (!sortArr) {
+            exercises = []
+        } else {
+            exercises = await Exercise.findAll({
+                where: {sort: sortArr}
+            });
+        }
+        res.json({
+            code : 200,
+            payload : exercises
         });
-        res.json(exercises);
     } catch (error) {
         console.error(error);
         next(error);
     }
 }
+
+// sort별 운동 목록 나누기
+// exports.getExercisesBySort = async (req, res, next) => {
+//     try {
+//         const exercises = await Exercise.findAll();
+//         const groupedExercises = {};
+
+//         // sort별로 그룹화
+//         exercises.forEach(exercise => {
+//             const sort = exercise.sort;
+//             if (!groupedExercises[sort]) {
+//                 groupedExercises[sort] = [];
+//             }
+//             groupedExercises[sort].push(exercise);
+//         });
+
+//         // 각 그룹에서 최대 5개씩만 포함
+//         for (const sort in groupedExercises) {
+//             groupedExercises[sort] = groupedExercises[sort].slice(0, 6);
+//         }
+
+//         res.json({
+//             code: 200,
+//             data: groupedExercises,
+//             message: '운동 목록을 성공적으로 가져왔습니다.'
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         next(error);
+//     }
+// }
+
 
 exports.exerciseInfo = async (req,res,next) => {
     console.log('각 운동에 대한 상세 정보');
@@ -37,7 +79,10 @@ exports.exerciseInfo = async (req,res,next) => {
             where : { id : req.params.id },
             // attributes: ['description', 'url']  -> react로 원하는 속성값 가져올 수 있음!
         })
-        res.json(exercise_info);
+        res.json({
+            code : 200,
+            payload : exercise_info
+        });
     } catch (error) {
         console.error(error);
         next(error);
@@ -46,15 +91,28 @@ exports.exerciseInfo = async (req,res,next) => {
 // 즐겨찾기 추가
 exports.favorite = async (req, res, next) => {
     console.log('운동 즐겨찾기');
+    console.log('logged in user', req.user);
+
     try {
         // 운동 테이블 목록에서 운동 테이블 요소 하나 가져오기
+        const exerciseId = req.body.id;
+        const userId = req.user.id; // 로그인한 사용자의 id를 가져옴
+
+        if (!exerciseId || !userId) {
+            return res.status(400).json({
+                code:400,
+                message:'운동 ID 또는 사용자 ID가 제공되지 않았습니다.'
+            })
+        }
+
         const favorite = await Exercise.findOne({
-            where: { id: req.body.id }
+            where: { id: exerciseId }
         });
+
         console.log(favorite);
         if (favorite) {
             // login 사용자 운동 즐겨찾기
-            await favorite.addExerciseFollow(req.user.id);
+            await favorite.addExerciseFollow(userId);
 
             // 1번 사용자 운동 즐겨찾기
             // await favorite.addExerciseFollow(1);
@@ -63,7 +121,7 @@ exports.favorite = async (req, res, next) => {
                 message: '목록에 추가되었습니다.'
             })
         } else {
-            res.json({
+            res.status(404).json({
                 code: 404,
                 message: '목록을 조회할 수 없습니다.'
             })
@@ -75,18 +133,31 @@ exports.favorite = async (req, res, next) => {
 }
 // 즐겨찾기 해제
 exports.unfavorite = async (req, res, next) => {
+    console.log('운동 즐겨찾기 해제');
+    console.log('logged in user:', req.user);
     try {
+        const exerciseId = req.body.id;
+        const userId = req.user.id // 로그인한 사용자의 ID를 가져옴
+
+        if (!exerciseId || !userId) {
+            return res.status(400).json({
+                code: 400,
+                message: "운동 ID 또는 사용자 ID가 제공되지 않았습니다."
+            })
+        }
+
         const favorite = await Exercise.findOne({
-            where: { id: req.body.id }
+            where: { id: exerciseId }
         });
+
         if (favorite) {
-            await user.removeExerciseFollow(req.user.id);
+            await favorite.removeExerciseFollow(userId); //userId를 가진 사용자의 즐겨찾기에서 운동을 제거
             res.json({
                 code: 200,
                 message: "목록에서 제외되었습니다."
             });
         } else {
-            res.json({
+            res.status(404).json({
                 code: 404,
                 message: "목록을 조회할 수 없습니다."
             });
@@ -97,10 +168,40 @@ exports.unfavorite = async (req, res, next) => {
     }
 }
 
+// 즐겨찾기 목록 조회
+exports.favoriteExercise = async (req, res, next) => {
+    console.log('즐겨찾기 운동 목록 조회');
+    console.log(req.user);
+    try {
+        const userId = req.user.id; // 로그인한 사용자의 ID를 가져옴
+
+        const favoriteExercises = await Exercise.findAll({
+            include: {
+                model: User,
+                as: 'exerciseFollow',
+                where: { id: userId },
+                through: {
+                    attributes: []
+                }
+            }
+        });
+
+        res.json({
+            code: 200,
+            payload: favoriteExercises,
+            message: '즐겨찾기 운동 목록을 성공적으로 가져왔습니다.'
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
+
 exports.showRandom = (req, res, next) => {
     console.log(req.params.user_detail_id);
     console.log('본인이 지정한 셀럽 이미지 배치. 랜덤 문구 표시');
 }
+
 
 // 작업 시 더미데이터 생성 (단, 배포 시 삭제할 것.)
 // exports.hiddenInsert = async(req, res, next) => {

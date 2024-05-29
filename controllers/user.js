@@ -1,3 +1,4 @@
+const { Sequelize } = require('sequelize');
 const { User, User_detail } = require('../models');
 const { sequelize } = require('../models');
 
@@ -94,7 +95,7 @@ exports.addUserDetail = async (req, res, next) => {
         await User_detail.create({
             height,
             weight,
-            bmi: height / weight * weight,
+            bmi: height / weight / weight,
             bodyshape,
             rec_cal: weight * 30,
             img,
@@ -162,7 +163,7 @@ exports.getLikers = async (req, res, next) => {
             ]
         });
         if (user) {
-            const likings = await user.getLikings({
+            const likings = await user.getLikers({
             })
             res.json({
                 code: 200,
@@ -190,7 +191,7 @@ exports.getLikings = async (req, res, next) => {
             ]
         });
         if (user) {
-            const likers = await user.getLikers({
+            const likers = await user.getLikings({
             })
             res.json({
                 code: 200,
@@ -211,20 +212,43 @@ exports.getLikings = async (req, res, next) => {
 // 랜덤 셀러브리티 3명 가져오기
 exports.getRandomRoleModels = async (req, res, next) => {
     try {
-        const [results, metadata] = await sequelize.query(
-            `(select * from users u
-                JOIN user_details ud
-                ON u.id = ud.user_id
-                where u.grade = 'celebrity'
-                order by rand()
-                limit 3)`
-        )
+        const results = await User.findAll({
+            order: Sequelize.literal('rand()'), limit: 3,
+            where: {grade : `celebrity`},
+            include: [{ model: User_detail, as: 'UserDetail' }]
+        })
+        // const [results, metadata] = await sequelize.query(
+        //     `(select * from users u
+        //         JOIN user_details ud
+        //         ON u.id = ud.user_id
+        //         where u.grade = 'celebrity'
+        //         order by rand()
+        //         limit 3)`
+        // )
         res.json({
             code: 200,
             result: results
         })
-    } catch (error) {
-        console.error(error);
-        next(error);;
+    } catch (err) {
+        console.error(err);
+        next(err);;
+    }
+}
+
+// 롤모델 바꾸기
+exports.modifyRoleModel = async (req, res, next) => {
+    try {
+        const user = await User.findByPk(req.user.id)
+        console.log('aaaaaaaaaaaaaaaa', req);
+        await user.update({ 
+            role_model_id: req.body.role_model_id
+        });
+        res.json({
+            code: 200,
+            message: '유저 수정 완료'
+        });
+    } catch (err) {
+        console.error(err);
+        next(err);
     }
 }

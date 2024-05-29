@@ -64,7 +64,7 @@ exports.join = async(req, res, next) => {
         user.createUserDetail({
             height,
             weight,
-            bmi: height / weight * weight,
+            bmi: height / weight / weight,
             bodyshape,
             rec_cal: weight * 30,
             img
@@ -84,7 +84,8 @@ exports.refreshToken = async (req, res, next) => {
         const { accessToken } = req.body;
         const accessResult = jwt.decode(accessToken, process.env.JWT_SECRET);
         const user = await User.findOne({ where: { id : accessResult.id }});
-        const refreshResult = jwt.verify(user.refreshToken, process.env.JWT_SECRET)
+        console.log(user);
+        const refreshResult = jwt.verify(user.refresh_token, process.env.JWT_SECRET)
         if (accessResult.id !== refreshResult.id){
             throw new Error ("토큰이 일치하지 않습니다.")
         }

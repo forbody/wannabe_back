@@ -50,7 +50,7 @@ router.use('/water', waterRouter)
 // /v1/exercise
 router.use('/exercise', exerciseRouter)
 
-// /v1/tips
+// /v1/health_tip
 router.use('/health_tip', healthtipRouter)
 
 module.exports = router;

@@ -16,7 +16,7 @@ class Health_tip extends Sequelize.Model {
         });
     }
     static associate(db) {
-        
+        db.Health_tip.belongsToMany(db.Exercise ,{through: 'ExerciseHealthTip'})
     }
 };
 
