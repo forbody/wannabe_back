@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getUsers, getUser, modifyUser, modifyRoleModel, deleteUser, addUserDetail, uploadUserImg, getLikings, getLikers, like, unlike, getRandomRoleModels } = require('../controllers/user')
+const { getUsers, getUser, modifyUser, modifyRoleModel, modifyRefreshToken, deleteUser, addUserDetail, uploadUserImg, getLikings, getLikers, like, unlike, getRandomRoleModels } = require('../controllers/user')
 const { verifyToken } = require("../middlewares")
 const multer = require('multer');
 const path = require('path')
@@ -28,6 +28,9 @@ router.get('/', verifyToken, getUsers)
 
 // PATCH /v1/users/rolemodel - 유저 롤모델 정보 수정 [완료]
 router.patch('/rolemodel', verifyToken, modifyRoleModel)
+
+// PATCH /v1/users/modifyRefreshToken - 리프레시 토큰 수정
+router.patch('/modifyRefreshToken', verifyToken, modifyRefreshToken);
 
 // PATCH /v1/users/ - 유저 정보 수정 [완료]
 router.patch('/', verifyToken, modifyUser)
