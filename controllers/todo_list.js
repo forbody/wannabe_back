@@ -37,6 +37,7 @@ exports.get_todo_list_all = async (req, res, next) => {
     try {
         const todo_list = await Todo_list.findAll({
             where : {share : true},
+            order: [['createdAt', 'DESC']],
             include : [
                 {
                     model: User,
@@ -60,6 +61,7 @@ exports.get_todo_list_my = async (req, res, next) => {
     try {
         const todo_list = await Todo_list.findAll({
             where : {share : true},
+            order: [['createdAt', 'DESC']],
             include : [
                 {
                     model: User,
@@ -128,11 +130,3 @@ exports.modify_todo_list = async (req, res, next) => {
     }
 }
 
-exports.delete_todo_list = async (req, res, next) => {
-    try {
-            
-    } catch (err) {
-        console.error(err);
-        next(err)
-    }
-}
