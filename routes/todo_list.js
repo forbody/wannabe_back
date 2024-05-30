@@ -1,5 +1,5 @@
 const express = require('express');
-const { delete_todo_list, get_todo_list, modify_todo_list, create_todo_list, get_todo_list_all, get_todo_list_my } = require('../controllers/todo_list');
+const { get_todo_list, modify_todo_list, create_todo_list, get_todo_list_all, get_todo_list_my } = require('../controllers/todo_list');
 const { verifyToken } = require('../middlewares');
 const router = express.Router();
 
@@ -18,9 +18,6 @@ router.get('/:date', verifyToken, get_todo_list)
 
 //[PATCH] v1/todo_list/:id
 router.patch('/:id', verifyToken, modify_todo_list)
-
-//[DELETE] v1/todo_list/:id 
-router.delete('/:id',verifyToken, delete_todo_list)
 
 
 
