@@ -84,7 +84,7 @@ app.listen(app.get('port'), ()=>{
     console.log(`${app.get('port')}번 포트에서 서버 실행`);
 })
 
-app.use('/api', errorReportRoute);
+
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Server is running on port ${process.env.PORT || 5000}`);
 });

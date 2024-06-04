@@ -11,6 +11,7 @@ const exerciseRouter = require('./exercise')
 const healthtipRouter = require('./health_tip')
 const todoShareRouter = require('./share')
 const categoryRouter = require('./category')
+const errorReportRoute = require('./errorReport')
 
 
 // POST /v1/auth/join - 회원가입
@@ -52,5 +53,8 @@ router.use('/exercise', exerciseRouter);
 
 // /v1/health_tip
 router.use('/health_tip', healthtipRouter);
+
+// /v1/error
+app.use('/error', errorReportRoute);
 
 module.exports = router;
