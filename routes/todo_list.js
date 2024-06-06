@@ -1,5 +1,5 @@
 const express = require('express');
-const { get_todo_list, modify_todo_list, create_todo_list, get_todo_list_all, get_todo_list_my } = require('../controllers/todo_list');
+const { get_todo_list, modify_todo_list, create_todo_list, get_todo_list_all, get_todo_list_my, todo_list_recommend, todo_list_unrecommend } = require('../controllers/todo_list');
 const { verifyToken } = require('../middlewares');
 const router = express.Router();
 
@@ -19,6 +19,11 @@ router.get('/:date', verifyToken, get_todo_list)
 //[PATCH] v1/todo_list/:id
 router.patch('/:id', verifyToken, modify_todo_list)
 
+//[POST] v1/todo_list/:id/recommend [list_id]
+router.get('/:id/recommend', verifyToken, todo_list_recommend)
+
+//[DELETE] v1/todo_list/:id/recommend [list_id]
+router.delete('/:id/recommend', verifyToken, todo_list_unrecommend)
 
 
 module.exports = router;

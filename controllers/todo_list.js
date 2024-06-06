@@ -38,13 +38,20 @@ exports.get_todo_list_all = async (req, res, next) => {
         const todo_list = await Todo_list.findAll({
             where : {share : true},
             order: [['createdAt', 'DESC']],
-            include : [
+            include: [
                 {
                     model: User,
-                    attributes : ['id', 'email', 'user_name'],
+                    attributes: ['id', 'email', 'user_name'],
+                    through: { as: 'List_user' }  // List_user 관계 포함
                 },
                 {
-                    model : Share_comment
+                    model: User,
+                    as: 'ListRecommend',
+                    attributes: ['id'],
+                    through: { as: 'List_follow' },  // List_follow 관계 포함
+                },
+                {
+                    model: Share_comment
                 }
             ]
         })
@@ -124,6 +131,49 @@ exports.modify_todo_list = async (req, res, next) => {
                 code : 200,
                 message : 'todo_list share 수정완료'
             })
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+}
+
+exports.todo_list_recommend = async (req, res, next) => {
+    try {   
+        const recommend = await Todo_list.findByPk(req.params.id)
+        if(recommend) {
+            await recommend.addListRecommend(req.user.id)
+            res.json({
+            code : 200,
+            message : '추천이 완료되었습니다.'
+        })
+        } else {
+            res.json({
+                code: 404,
+                message: "리스트를 찾을수 없습니다."
+            });
+        }
+
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+}
+
+exports.todo_list_unrecommend = async (req, res, next) => {
+    try {   
+        const recommend = await Todo_list.findByPk(req.params.id)
+        if(recommend) {
+            await recommend.removeListRecommend(req.user.id)
+            res.json({
+            code : 200,
+            message : '추천이 취소되었습니다.'
+        })
+        } else {
+            res.json({
+                code: 404,
+                message: "리스트를 찾을수 없습니다."
+            });
+        }
     } catch (err) {
         console.error(err);
         next(err)
