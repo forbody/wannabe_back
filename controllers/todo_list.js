@@ -26,7 +26,6 @@ exports.create_todo_list = async (req, res, next) => {
             code : 200,
             payload : todo_list
         })
-
     } catch (err) {
         console.error(err);
         next(err)
@@ -174,6 +173,56 @@ exports.todo_list_unrecommend = async (req, res, next) => {
                 message: "리스트를 찾을수 없습니다."
             });
         }
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+}
+
+
+exports.getTop3RecommendedTodoLists = async(req, res, next) => {
+    try {
+        const top3 = await Todo_list.findAll({
+            order: [['recommend_count', 'DESC']], // recommend_count 기준 내림차순 정렬
+            limit: 3, // 상위 3개만 가져오기
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'email', 'user_name'],
+                    through: { as: 'List_user' }  // List_user 관계 포함
+                },
+                {
+                    model: User,
+                    as: 'ListRecommend',
+                    attributes: ['id'],
+                    through: { as: 'List_follow' },  // List_follow 관계 포함
+                },
+                {
+                    model: Share_comment
+                }
+            ]
+        });
+        res.json({
+            code: 200,
+            payload: top3
+        });
+    } catch (err) {
+        console.error(err);
+        next(err)
+    }
+};
+
+exports.modify_recommend_count = async (req,res,next) => {
+    try {
+        await Todo_list.update({
+            recommend_count : req.body.count
+        },{
+            where : {id :req.params.id}
+        })
+        res.json({
+            code: 200,
+            message : '공유수가 수정되었습니다.'
+        });
     } catch (err) {
         console.error(err);
         next(err)
