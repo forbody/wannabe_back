@@ -64,7 +64,7 @@ exports.join = async(req, res, next) => {
         user.createUserDetail({
             height,
             weight,
-            bmi: height / weight / weight,
+            bmi: weight / height / height * 10000,
             bodyshape,
             rec_cal: weight * 30,
             img
