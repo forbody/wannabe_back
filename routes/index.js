@@ -55,6 +55,6 @@ router.use('/exercise', exerciseRouter);
 router.use('/health_tip', healthtipRouter);
 
 // /v1/error
-app.use('/error', errorReportRoute);
+router.use('/error', errorReportRoute);
 
 module.exports = router;

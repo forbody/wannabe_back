@@ -4,7 +4,6 @@ const morgan = require('morgan'); // morgan(로그) 모듈
 const path = require('path'); // 경로 설정 모듈
 const session = require('express-session'); // 세션 모듈
 const cors = require('cors'); // cors 모듈
-const errorReportRoute = require('./routes/errorReport');
 
 
 let corsOptions = {
@@ -83,8 +82,3 @@ app.use((err, req, res, next) => {
 app.listen(app.get('port'), ()=>{
     console.log(`${app.get('port')}번 포트에서 서버 실행`);
 })
-
-
-app.listen(process.env.PORT || 5000, () => {
-    console.log(`Server is running on port ${process.env.PORT || 5000}`);
-});
