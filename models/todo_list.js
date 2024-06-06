@@ -15,6 +15,11 @@ class Todo_list extends Sequelize.Model {
                 type : Sequelize.DATEONLY,
                 allowNull: false,
             },
+            recommend_count : {
+                type : Sequelize.INTEGER,
+                allowNull : true,
+                defaultValue : 0
+            }
         }, {
             sequelize,
             paranoid: true,
