@@ -26,6 +26,7 @@ class Todo_list extends Sequelize.Model {
     static associate(db) {
         db.Todo_list.hasMany(db.Share_comment);
         db.Todo_list.belongsToMany(db.User,{ through: 'List_user' })
+        db.Todo_list.belongsToMany(db.User, {as: 'ListRecommend',  through: 'List_follow' });
         db.Todo_list.belongsToMany(db.Todo_element,{ through: 'List_elem' })
     }
 };
