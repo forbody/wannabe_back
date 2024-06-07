@@ -25,7 +25,7 @@ router.patch('/:id/recommend', verifyToken, modify_recommend_count)
 //[PATCH] v1/todo_list/:id/share
 router.patch('/:id', verifyToken, modify_todo_list)
 
-//[POST] v1/todo_list/:id/recommend [list_id]
+//[GET] v1/todo_list/:id/recommend [list_id]
 router.get('/:id/recommend', verifyToken, todo_list_recommend)
 
 //[DELETE] v1/todo_list/:id/recommend [list_id]
