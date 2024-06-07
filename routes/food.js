@@ -1,11 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { uploadFood , watercount, getDishes, getDish, getRandomDishes, getTodayDishes } = require('../controllers/food');
+const {  watercount, getDishes, getDish, getRandomDishes, getTodayDishes } = require('../controllers/food');
 const { verifyToken } = require('../middlewares');
 
-
-// v1/food/ - 음식 더미데이터 생성
-router.get('/', uploadFood)
 
 // v1/food/sort/:sort - 음식들 가져오기
 router.get('/sort/:sort', verifyToken, getDishes)

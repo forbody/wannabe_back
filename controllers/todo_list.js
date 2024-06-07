@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-const { Todo_list ,User, Todo_element, Share_comment } = require('../models');
+const { Todo_list ,User, Todo_element, Share_comment, sequelize } = require('../models');
 
 exports.create_todo_list = async (req, res, next) => {
     try {
@@ -34,8 +34,36 @@ exports.create_todo_list = async (req, res, next) => {
 
 exports.get_todo_list_all = async (req, res, next) => {
     try {
+        const top3 = await Todo_list.findAll({
+            order: [['recommend_count', 'DESC']], // recommend_count 기준 내림차순 정렬
+            limit: 3, // 상위 3개만 가져오기
+            include: [
+                {
+                    model: User,
+                    attributes: ['id', 'email', 'user_name'],
+                    through: { as: 'List_user' }  // List_user 관계 포함
+                },
+                {
+                    model: User,
+                    as: 'ListRecommend',
+                    attributes: ['id'],
+                    through: { as: 'List_follow' },  // List_follow 관계 포함
+                },
+                {
+                    model: Share_comment
+                }
+            ]
+        });
+
+        const top3Ids = top3.map(e => e.id);
+
         const todo_list = await Todo_list.findAll({
-            where : {share : true},
+            where : {
+                share : true,
+                id: {
+                    [Sequelize.Op.notIn] :top3Ids
+                }
+            },
             order: [['createdAt', 'DESC']],
             include: [
                 {
@@ -54,9 +82,12 @@ exports.get_todo_list_all = async (req, res, next) => {
                 }
             ]
         })
+        
+        
+        
         res.json({
             code : 200,
-            payload :todo_list
+            payload : todo_list
         })
     } catch (err) {
         console.error(err);
