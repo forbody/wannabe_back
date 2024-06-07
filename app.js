@@ -31,7 +31,7 @@ const apiRouter = require('./routes'); // 라우터 경로 설정 (자체)
 /* 시퀄라이즈 세팅 */
 
 const { sequelize } = require('./models'); // 시퀄라이즈 모델 설정
-sequelize.sync({ force: false }) // 서버 실행 시 MySQL과 연동
+sequelize.sync({ force: true }) // 서버 실행 시 MySQL과 연동
     .then(() => {
         console.log('데이터베이스 연결 성공');
     })
