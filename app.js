@@ -4,6 +4,8 @@ const morgan = require('morgan'); // morgan(로그) 모듈
 const path = require('path'); // 경로 설정 모듈
 const session = require('express-session'); // 세션 모듈
 const cors = require('cors'); // cors 모듈
+
+
 let corsOptions = {
     origin: process.env.CLIENT_URL,
     credentials: true

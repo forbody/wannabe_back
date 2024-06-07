@@ -17,7 +17,7 @@ exports.createToken = async (req, res, next) => {
                 const accessToken = jwt.sign(
                     { id: user.id, nickname: user.user_name, grade: user.grade},
                     process.env.JWT_SECRET,
-                    { expiresIn : '10s', issuer: "wannabe", subject: "accessToken"}
+                    { expiresIn : '1h', issuer: "wannabe", subject: "accessToken"}
                 );
                 const refreshToken = jwt.sign(
                     { id: user.id, nickname: user.user_name, grade: user.grade},
