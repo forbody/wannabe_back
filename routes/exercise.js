@@ -22,7 +22,7 @@ router.get('/sort', verifyToken, sortExercise);
 // router.get('/phj/secret', hiddenInsert);
 
 // 각 운동에 대한 운동 설명, 영상링크 조회
-router.get('/info/:id', exerciseInfo);
+router.get(':id/info/', exerciseInfo);
 
 // 즐겨찾기 하고 싶은 운동을 상단에 표시가능
 // router.post (이 기능 하려면 db에 테이블 생성 해야함)
