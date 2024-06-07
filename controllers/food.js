@@ -434,7 +434,6 @@ exports.uploadFood = async  (req, res, next) => {
         //     {"category_name" : "workout", "img" : "workout.png"},
         //     {"category_name" : "food", "img" : "food.png"},
         // ])
-
         await Food.bulkCreate(fakeFood)
         res.json("ok")
     } catch (err) {
